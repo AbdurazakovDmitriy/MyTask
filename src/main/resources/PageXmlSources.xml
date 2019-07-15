@@ -1,0 +1,20 @@
+<ModelType>
+    <DriverPath>
+        <Chrome>D:\chromedriver\chromedriver.exe</Chrome>
+        <Firefox>//////</Firefox>
+    </DriverPath>
+    <Pages>
+        <Page name="StartPage">
+            <Element name="close" type="Button" ChromePath="//div[@ng-click='close()']"
+                     FirefoxPath="//div[@ng-click='close()']"/>
+            <Element name="info" type="Label" ChromePath="//div[@class='info']"
+                     FirefoxPath="//div[@class='info']"/>
+        </Page>
+        <Page name="AnotherPage">
+            <Element name="rs_hint" type="Label" ChromePath="//div[@ng-click='close()']"
+                     FirefoxPath="//div[@ng-click='close()']"/>
+            <Element name="link" type="Button" ChromePath="//div[@class='info']"
+                     FirefoxPath="//div[@class='info']"/>
+        </Page>
+    </Pages>
+</ModelType>
