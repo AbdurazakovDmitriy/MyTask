@@ -5,6 +5,7 @@ import ru.pflb.homework.CustomClassLoader;
 import ru.pflb.homework.annotations.Element;
 import ru.pflb.homework.elementModels.BasicElement;
 
+import javax.tools.JavaCompiler;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
@@ -92,6 +93,8 @@ public class Builder {
                         }
 
                         if (elementEvent == XMLEvent.START_ELEMENT) {
+                            //todo в @BasicElement просто сделай конструктор по ридеру и добавляй elementList.add(@BasicElement.of(...));
+                            //todo а deprecated элементы лучше сразу выкидывать прям тут
                             BasicElement basicElement = new BasicElement();
                             basicElement.setDeprecated(reader.getAttributeValue(null, DEPRECATED));
                             basicElement.setName(reader.getAttributeValue(null, NAME));
@@ -112,7 +115,7 @@ public class Builder {
     public static Class buildPage(String driverType, String pageName) {
         String basicPage = null;
         try {
-            basicPage = FileUtils.readFileToString(new File("./src/main/resources/Page.java"));
+            basicPage = FileUtils.readFileToString(new File("./src/main/resources/PagePattern.pattern"));
         } catch (IOException e) {
             e.printStackTrace();
         }

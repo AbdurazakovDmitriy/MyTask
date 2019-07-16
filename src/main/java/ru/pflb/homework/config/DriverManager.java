@@ -8,13 +8,14 @@ import ru.pflb.homework.builder.Builder;
 import java.util.Objects;
 
 public final class DriverManager {
+    //todo а если использовать мапу - то не понадобится использовать миллиард свитчей
     private static ThreadLocal<WebDriver> chromeDriverContainer = new ThreadLocal<>();
     private static ThreadLocal<WebDriver> firefoxDriverContainer = new ThreadLocal<>();
 
 
     private DriverManager() {
     }
-
+    //TODO а синхронизация?
     public static WebDriver get(Driver driver) {
         switch (driver) {
             case CHROME_DRIVER: {
@@ -57,7 +58,7 @@ public final class DriverManager {
         }
         return null;
     }
-
+    //TODO Поскольку это активно используемый енам, я бы советовал вынести его в отдельный класс
     public static enum Driver {
         CHROME_DRIVER,
         FIREFOX_DRIVER;

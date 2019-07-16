@@ -7,6 +7,8 @@
         <Page name="LoginPage">
             <Element name="close" type="WebElement" ChromePath="//span[@class='RveJvd snByac']"
                      FirefoxPath="//div[@ng-click='close()']"/>
+            <Element name="open" type="WebElement" ChromePath="//span[@class='RveJvd snByac']"
+                     FirefoxPath="//div[@ng-click='open()']"/>
             <Element deprecated="true" name="info" type="Label" ChromePath="//div[@class='info']"
                      FirefoxPath="//div[@class='info']"/>
         </Page>
