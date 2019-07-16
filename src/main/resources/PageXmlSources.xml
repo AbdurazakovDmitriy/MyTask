@@ -1,13 +1,13 @@
 <ModelType>
     <DriverPath>
         <Chrome>D:\chromedriver\chromedriver.exe</Chrome>
-        <Firefox>//////</Firefox>
+        <Firefox>D:\firefoxdriver\geckodriver.exe</Firefox>
     </DriverPath>
     <Pages>
-        <Page name="StartPage">
-            <Element name="close" type="Button" ChromePath="//div[@ng-click='close()']"
+        <Page name="LoginPage">
+            <Element name="close" type="WebElement" ChromePath="//span[@class='RveJvd snByac']"
                      FirefoxPath="//div[@ng-click='close()']"/>
-            <Element name="info" type="Label" ChromePath="//div[@class='info']"
+            <Element deprecated="true" name="info" type="Label" ChromePath="//div[@class='info']"
                      FirefoxPath="//div[@class='info']"/>
         </Page>
         <Page name="AnotherPage">
