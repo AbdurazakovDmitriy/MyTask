@@ -1,75 +1,36 @@
 package ru.pflb.homework.config;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.pflb.homework.builder.Builder;
+import ru.pflb.homework.builder.StaxStreamProcessor;
 
-import java.util.Objects;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.XMLEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public final class DriverManager {
-    //todo а если использовать мапу - то не понадобится использовать миллиард свитчей
-    private static ThreadLocal<WebDriver> chromeDriverContainer = new ThreadLocal<>();
-    private static ThreadLocal<WebDriver> firefoxDriverContainer = new ThreadLocal<>();
-
 
     private DriverManager() {
     }
-    //TODO а синхронизация?
-    public static WebDriver get(Driver driver) {
-        switch (driver) {
-            case CHROME_DRIVER: {
-                WebDriver webDriver = chromeDriverContainer.get();
-                if (webDriver != null) {
-                    return webDriver;
+
+    public static synchronized WebDriver get(String driverType) {
+        WebDriver webDriver=null;
+        try(StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
+            XMLStreamReader reader = processor.getReader();
+            while (reader.hasNext()) {
+                int event = reader.next();
+                if(event== XMLEvent.START_ELEMENT&&reader.getLocalName().equals("Driver")){
+                    System.setProperty(reader.getAttributeValue(null, "key"), reader.getAttributeValue(null, "filePath"));
+                    Class<?> clazz = Class.forName(reader.getAttributeValue(null,"type"));
+                    webDriver = (WebDriver) clazz.newInstance();
                 }
             }
-            break;
-            case FIREFOX_DRIVER: {
-                WebDriver webDriver = firefoxDriverContainer.get();
-                if (webDriver != null) {
-                    return webDriver;
-                }
-            }
-            break;
-            default: {
-                ////////////////////////////
-            }
+        } catch (XMLStreamException | IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
         }
-
-
-
-
-
-
-        switch (driver) {
-            case CHROME_DRIVER: {
-                System.setProperty("webdriver.chrome.driver", Objects.requireNonNull(Builder.parseDriverPath("Chrome")));
-                chromeDriverContainer.set(new ChromeDriver());
-                return chromeDriverContainer.get();
-            }
-            case FIREFOX_DRIVER: {
-                System.setProperty("webdriver.gecko.driver", Objects.requireNonNull(Builder.parseDriverPath("Firefox")));
-                firefoxDriverContainer.set(new FirefoxDriver());
-                return firefoxDriverContainer.get();
-            }
-            default:
-                ////////////////////
-        }
-        return null;
-    }
-    //TODO Поскольку это активно используемый енам, я бы советовал вынести его в отдельный класс
-    public static enum Driver {
-        CHROME_DRIVER,
-        FIREFOX_DRIVER;
-
-        public static Driver of(String browser) {
-            switch (browser.toUpperCase()){
-                case "CHROME": return CHROME_DRIVER;
-                case "FIREFOX": return FIREFOX_DRIVER;
-            }
-            return null;
-        }
+        return webDriver;
     }
 
 

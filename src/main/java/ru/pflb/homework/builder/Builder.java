@@ -1,11 +1,11 @@
 package ru.pflb.homework.builder;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.WebDriver;
 import ru.pflb.homework.CustomClassLoader;
 import ru.pflb.homework.annotations.Element;
-import ru.pflb.homework.elementModels.BasicElement;
+import ru.pflb.homework.elementModels.ElementPattern;
 
-import javax.tools.JavaCompiler;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
@@ -31,10 +31,10 @@ public class Builder {
     private static final String DEPRECATED = "deprecated";
 
     public static void main(String[] args) throws IOException, XMLStreamException, ClassNotFoundException, InterruptedException {
-        String chromePath = parseDriverPath(CHROME);
-        String firefoxPath = parseDriverPath(FIREFOX);
-        System.out.println(chromePath);
-        System.out.println(firefoxPath);
+//        String chromePath = parseDriverPath(CHROME);
+//        String firefoxPath = parseDriverPath(FIREFOX);
+//        System.out.println(chromePath);
+//        System.out.println(firefoxPath);
 
 
 //        System.out.println(buildPage(CHROME, "StartPage").getSimpleName());
@@ -42,40 +42,16 @@ public class Builder {
         destroyPages();
     }
 
-    /**
-     * Возвращает путь к указанному драйверу
-     *
-     * @param tagName имя драйвера
-     * @return путь к драйверу
-     * @throws XMLStreamException
-     * @throws IOException
-     */
-    public static synchronized String parseDriverPath(String tagName) {
-        try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
-            XMLStreamReader reader = processor.getReader();
-            while (reader.hasNext()) {       // while not end of XML
-                int event = reader.next();   // read next event
-                if (event == XMLEvent.START_ELEMENT &&
-                    tagName.equals(reader.getLocalName())) {
-                    return reader.getElementText();
-                }
-            }
-        } catch (XMLStreamException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     /**
      * Возвращает список элементов указанной страницы
      *
      * @param pageName имя страницы
      * @return список элементов
-     * @throws IOException
-     * @throws XMLStreamException
      */
-    public static synchronized List<BasicElement> parsePage(String pageName) {
-        List<BasicElement> elementList = new ArrayList<>();
+    public static synchronized List<ElementPattern> parsePage(String pageName) {
+        List<ElementPattern> elementList = new ArrayList<>();
         try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
             XMLStreamReader reader = processor.getReader();
             while (reader.hasNext()) {       // while not end of XML
@@ -93,15 +69,15 @@ public class Builder {
                         }
 
                         if (elementEvent == XMLEvent.START_ELEMENT) {
-                            //todo в @BasicElement просто сделай конструктор по ридеру и добавляй elementList.add(@BasicElement.of(...));
+                            //todo в @ElementPattern просто сделай конструктор по ридеру и добавляй elementList.add(@ElementPattern.of(...));
                             //todo а deprecated элементы лучше сразу выкидывать прям тут
-                            BasicElement basicElement = new BasicElement();
-                            basicElement.setDeprecated(reader.getAttributeValue(null, DEPRECATED));
-                            basicElement.setName(reader.getAttributeValue(null, NAME));
-                            basicElement.setType(reader.getAttributeValue(null, TYPE));
-                            basicElement.setChromePath(reader.getAttributeValue(null, CHROME_PATH));
-                            basicElement.setFirefoxPath(reader.getAttributeValue(null, FIREFOX_PATH));
-                            elementList.add(basicElement);
+                            ElementPattern elementPattern = new ElementPattern();
+                            elementPattern.setDeprecated(reader.getAttributeValue(null, DEPRECATED));
+                            elementPattern.setName(reader.getAttributeValue(null, NAME));
+                            elementPattern.setType(reader.getAttributeValue(null, TYPE));
+                            elementPattern.setChromePath(reader.getAttributeValue(null, CHROME_PATH));
+                            elementPattern.setFirefoxPath(reader.getAttributeValue(null, FIREFOX_PATH));
+                            elementList.add(elementPattern);
                         }
                     }
                 }
@@ -123,21 +99,18 @@ public class Builder {
         basicPage = basicPage.replaceFirst("PageName", pageName);
         int indexOfSelectableElement = basicPage.indexOf('{');
         StringBuilder stringBuilder = new StringBuilder(basicPage);
-        List<BasicElement> elementList = parsePage(pageName);
-
-        String element = "public typeHolder elementNameHolder(){\n\r return DriverManager.get(DriverManager.Driver.of(\"driverHolder\")).findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
-        for (BasicElement basicElement : elementList) {
-            if (basicElement.isDeprecated())
+        List<ElementPattern> elementList = parsePage(pageName);
+        String element = "@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)DriverManager.get(Driver.of(\"driverHolder\")).findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
+        for (ElementPattern elementPattern : elementList) {
+            if (elementPattern.isDeprecated()) {
                 continue;
-            stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", basicElement.getName())
-                .replaceAll("pathHolder", driverType.equals(CHROME) ? basicElement.getChromePath() : driverType.equals(FIREFOX) ? basicElement.getFirefoxPath() : "")
-                .replaceAll("typeHolder", basicElement.getType())
-                .replaceAll("elementNameHolder", basicElement.getName())
-                .replaceAll("driverHolder",driverType));
+            }
+            stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getName())
+                .replaceAll("pathHolder", driverType.equals(CHROME) ? elementPattern.getChromePath() : driverType.equals(FIREFOX) ? elementPattern.getFirefoxPath() : "")//todo придумать инициализацию xpath
+                .replaceAll("typeHolder", elementPattern.getType())
+                .replaceAll("elementNameHolder", elementPattern.getName())
+                .replaceAll("driverHolder", driverType));
         }
-
-
-
         String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName);
         File pageFile = new File(pageClassname);
         try {
@@ -145,15 +118,13 @@ public class Builder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Properties properties = System.getProperties();
         String sep = properties.getProperty("file.separator");
         String jrePath = properties.getProperty("java.home");
-        String classFileDirectory = String.format(".%starget%sclasses", sep, sep); //todo добавлен путь для файла .class
+        String classFileDirectory = String.format(".%starget%sclasses", sep, sep);
         Element.class.getPackageName();
         String javac = "\"" + jrePath + sep + "bin" + sep + "javac\"";
         String command = String.format("%s -d %s -classpath \"%s\" %s", javac, classFileDirectory, System.getProperty("java.class.path"), pageFile.getAbsolutePath());
-
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(command);
@@ -165,12 +136,9 @@ public class Builder {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        int pointIndex = pageFile.getAbsolutePath().lastIndexOf(".");
-        String absolutePath = pageFile.getAbsolutePath().substring(0, pointIndex);
         CustomClassLoader customClassLoader = new CustomClassLoader();
         try {
-            return customClassLoader.findClass(String.format("%s%sru%spflb%shomework%spage%s%s", classFileDirectory, sep, sep, sep, sep, sep, pageName)); //todo изменен путь
+            return customClassLoader.findClass(String.format("%s%sru%spflb%shomework%spage%s%s", classFileDirectory, sep, sep, sep, sep, sep, pageName));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

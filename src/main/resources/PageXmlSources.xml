@@ -1,8 +1,8 @@
 <ModelType>
-    <DriverPath>
-        <Chrome>D:\chromedriver\chromedriver.exe</Chrome>
-        <Firefox>D:\firefoxdriver\geckodriver.exe</Firefox>
-    </DriverPath>
+    <Drivers>
+        <Driver type="ChromeDriver" filePath="D:\chromedriver\chromedriver.exe" key="webdriver.chrome.driver"/>
+        <Driver type="FirefoxDriver" filePath="D:\firefoxdriver\geckodriver.exe" key="webdriver.gecko.driver"/>
+    </Drivers>
     <Pages>
         <Page name="LoginPage">
             <Element name="close" type="WebElement" ChromePath="//span[@class='RveJvd snByac']"

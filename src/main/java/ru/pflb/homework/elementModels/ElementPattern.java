@@ -3,13 +3,15 @@ package ru.pflb.homework.elementModels;
 //Но 45 строк единственная логика которых - работа с примитивным POJO это жесть
 //Аналогично в билдере не надо получать каждый аттрибут, как будто это бог, не надо к нему поименно обращаться
 //Просто через форич загоняешь все через reflection либо через мапу/модель сюда
-//Плюс это не элемент - не обманывай себя. Это Шаблон для построения элемента. Переименуй класс
+
 @Deprecated
-public class BasicElement {
+public class ElementPattern {
     private String name;
     private String type;
     private String chromePath;
+
     private String firefoxPath;
+
     private String isDeprecated;
 
     public void setName(String name) {
