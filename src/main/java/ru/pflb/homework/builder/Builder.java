@@ -1,7 +1,6 @@
 package ru.pflb.homework.builder;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.WebDriver;
 import ru.pflb.homework.CustomClassLoader;
 import ru.pflb.homework.annotations.Element;
 import ru.pflb.homework.elementModels.ElementPattern;
@@ -28,7 +27,6 @@ public class Builder {
     private static final String TYPE = "type";
     private static final String CHROME_PATH = "ChromePath";
     private static final String FIREFOX_PATH = "FirefoxPath";
-    private static final String DEPRECATED = "deprecated";
 
     public static void main(String[] args) throws IOException, XMLStreamException, ClassNotFoundException, InterruptedException {
 //        String chromePath = parseDriverPath(CHROME);
@@ -37,19 +35,12 @@ public class Builder {
 //        System.out.println(firefoxPath);
 
 
-//        System.out.println(buildPage(CHROME, "StartPage").getSimpleName());
+        System.out.println(Objects.requireNonNull(buildPage(CHROME, "LoginPage")).getSimpleName());
 //        System.out.println(buildPage(CHROME, "AnotherPage").getSimpleName());
-        destroyPages();
+//        destroyPages();
     }
 
 
-
-    /**
-     * Возвращает список элементов указанной страницы
-     *
-     * @param pageName имя страницы
-     * @return список элементов
-     */
     public static synchronized List<ElementPattern> parsePage(String pageName) {
         List<ElementPattern> elementList = new ArrayList<>();
         try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
@@ -67,17 +58,8 @@ public class Builder {
                         } else if (reader.getEventType() == XMLEvent.END_ELEMENT) {
                             unclosedTags -= 1;
                         }
-
                         if (elementEvent == XMLEvent.START_ELEMENT) {
-                            //todo в @ElementPattern просто сделай конструктор по ридеру и добавляй elementList.add(@ElementPattern.of(...));
-                            //todo а deprecated элементы лучше сразу выкидывать прям тут
-                            ElementPattern elementPattern = new ElementPattern();
-                            elementPattern.setDeprecated(reader.getAttributeValue(null, DEPRECATED));
-                            elementPattern.setName(reader.getAttributeValue(null, NAME));
-                            elementPattern.setType(reader.getAttributeValue(null, TYPE));
-                            elementPattern.setChromePath(reader.getAttributeValue(null, CHROME_PATH));
-                            elementPattern.setFirefoxPath(reader.getAttributeValue(null, FIREFOX_PATH));
-                            elementList.add(elementPattern);
+                            elementList.add(ElementPattern.of(reader));
                         }
                     }
                 }
@@ -87,6 +69,7 @@ public class Builder {
         }
         return elementList;
     }
+
 
     public static Class buildPage(String driverType, String pageName) {
         String basicPage = null;
@@ -100,16 +83,11 @@ public class Builder {
         int indexOfSelectableElement = basicPage.indexOf('{');
         StringBuilder stringBuilder = new StringBuilder(basicPage);
         List<ElementPattern> elementList = parsePage(pageName);
-        String element = "@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)DriverManager.get(Driver.of(\"driverHolder\")).findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
+        String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)DriverManager.get().findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
         for (ElementPattern elementPattern : elementList) {
-            if (elementPattern.isDeprecated()) {
-                continue;
-            }
-            stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getName())
-                .replaceAll("pathHolder", driverType.equals(CHROME) ? elementPattern.getChromePath() : driverType.equals(FIREFOX) ? elementPattern.getFirefoxPath() : "")//todo придумать инициализацию xpath
-                .replaceAll("typeHolder", elementPattern.getType())
-                .replaceAll("elementNameHolder", elementPattern.getName())
-                .replaceAll("driverHolder", driverType));
+            stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getAttribute("name"))
+                .replaceAll("pathHolder",elementPattern.getAttribute(String.format("%sPath",driverType.toLowerCase())))
+                .replaceAll("typeHolder", elementPattern.getAttribute("type")));
         }
         String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName);
         File pageFile = new File(pageClassname);

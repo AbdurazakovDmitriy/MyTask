@@ -1,56 +1,29 @@
 package ru.pflb.homework.elementModels;
-//TODO from y.skvortsov: безумное количество одинакового кода. Используй ломбок, либо рефлексию, либо мапу, либо свою модель на основе капабилок.
-//Но 45 строк единственная логика которых - работа с примитивным POJO это жесть
-//Аналогично в билдере не надо получать каждый аттрибут, как будто это бог, не надо к нему поименно обращаться
-//Просто через форич загоняешь все через reflection либо через мапу/модель сюда
 
-@Deprecated
+import javax.xml.stream.XMLStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ElementPattern {
-    private String name;
-    private String type;
-    private String chromePath;
+    private Map<String, String> attributes;
 
-    private String firefoxPath;
-
-    private String isDeprecated;
-
-    public void setName(String name) {
-        this.name = name;
+    public ElementPattern() {
+        attributes = new HashMap<>();
     }
 
-    public void setType(String type) {
-        this.type = type;
+
+    public static ElementPattern of(XMLStreamReader reader) {
+        ElementPattern result = new ElementPattern();
+        int attributesCount = reader.getAttributeCount();
+        for (int i = 0; i < attributesCount; i++) {
+            String attributeName = reader.getAttributeLocalName(i);
+            result.attributes.put(attributeName, reader.getAttributeValue(null, attributeName));
+        }
+        return result;
     }
 
-    public void setChromePath(String chromePath) {
-        this.chromePath = chromePath;
+    public String getAttribute(String key) {
+        return attributes.get(key);
     }
 
-    public void setFirefoxPath(String firefoxPath) {
-        this.firefoxPath = firefoxPath;
-    }
-
-    public void setDeprecated(String attributeValue) {
-        isDeprecated=attributeValue;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getChromePath() {
-        return chromePath;
-    }
-
-    public String getFirefoxPath() {
-        return firefoxPath;
-    }
-
-    public boolean isDeprecated() {
-        return "true".equals(isDeprecated);
-    }
 }

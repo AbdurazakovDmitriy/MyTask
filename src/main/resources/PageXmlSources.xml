@@ -5,18 +5,24 @@
     </Drivers>
     <Pages>
         <Page name="LoginPage">
-            <Element name="close" type="WebElement" ChromePath="//span[@class='RveJvd snByac']"
-                     FirefoxPath="//div[@ng-click='close()']"/>
-            <Element name="open" type="WebElement" ChromePath="//span[@class='RveJvd snByac']"
-                     FirefoxPath="//div[@ng-click='open()']"/>
-            <Element deprecated="true" name="info" type="Label" ChromePath="//div[@class='info']"
-                     FirefoxPath="//div[@class='info']"/>
+            <Element name="close" type="WebElement" chromePath="xpath for chromedriver"
+                     firefoxPath="//div[@ng-click='close()']"/>
+            <Element name="clientType" type="Label" chromePath="//span[@class='RveJvd snByac']"
+                     firefoxPath="//div[@ng-click='close()']" onClick="transferPageNonClient"/>
+            <Element name="open" type="WebElement" chromePath="//span[@class='RveJvd snByac']"
+                     firefoxPath="//div[@ng-click='open()']"/>
+            <Element deprecated="true" name="info" type="Label" chromePath="//div[@class='info']"
+                     firefoxPath="//div[@class='info']"/>
         </Page>
         <Page name="AnotherPage">
-            <Element name="rs_hint" type="Label" ChromePath="//div[@ng-click='close()']"
-                     FirefoxPath="//div[@ng-click='close()']"/>
-            <Element name="link" type="Button" ChromePath="//div[@class='info']"
-                     FirefoxPath="//div[@class='info']"/>
+            <Element name="rs_hint" type="Label" chromePath="//div[@ng-click='close()']"
+                     firefoxPath="//div[@ng-click='close()']"/>
+            <Element name="link" type="Button" chromePath="//div[@class='info']"
+                     firefoxPath="//div[@class='info']"/>
         </Page>
     </Pages>
+
+    <Triggers>
+        <Trigger name="transferPageNonClient" event="transferPageClientType=//div[@ng-click='close()']"/>
+    </Triggers>
 </ModelType>
