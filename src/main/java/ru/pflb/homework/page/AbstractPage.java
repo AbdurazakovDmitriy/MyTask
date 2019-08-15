@@ -7,11 +7,10 @@ import ru.pflb.homework.config.DriverManager;
 public class AbstractPage {
     private WebDriverWait wait = new WebDriverWait(DriverManager.get(), 10);
 
-    public static void setDriverType(String driverType) {
-        driverType = driverType;
+
+
+    public AbstractPage() {
+
     }
-
-
-
 
 }
