@@ -11,7 +11,6 @@ public class ElementPattern {
         attributes = new HashMap<>();
     }
 
-
     public static ElementPattern of(XMLStreamReader reader) {
         ElementPattern result = new ElementPattern();
         int attributesCount = reader.getAttributeCount();
