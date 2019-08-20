@@ -28,16 +28,11 @@ public class Builder {
     private static final String CHROME_PATH = "ChromePath";
     private static final String FIREFOX_PATH = "FirefoxPath";
 
-    public static void main(String[] args) throws IOException, XMLStreamException, ClassNotFoundException, InterruptedException {
+    public static void main(String[] args) {
 //        String chromePath = parseDriverPath(CHROME);
 //        String firefoxPath = parseDriverPath(FIREFOX);
-//        System.out.println(chromePath);
-//        System.out.println(firefoxPath);
-
-
-        System.out.println(Objects.requireNonNull(buildPage(CHROME, "LoginPage")).getSimpleName());
+        buildPage(CHROME, "LoginPage");
 //        System.out.println(buildPage(CHROME, "AnotherPage").getSimpleName());
-//        destroyPages();
     }
 
 
