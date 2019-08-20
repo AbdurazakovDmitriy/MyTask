@@ -1,5 +1,9 @@
 package ru.pflb.homework;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.spi.LoggerFactoryBinder;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,23 +12,27 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class CustomClassLoader extends ClassLoader {
+    public CustomClassLoader(){}
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Override
     public Class<?> findClass(String name) throws ClassNotFoundException {
-        //D:\workDirectory\newBuild\frameWork\target\classes\ru\pflb\homework\page\StartPage.class
-        File f = new File(name+".class");
-        if(!f.isFile())
-            throw new ClassNotFoundException("Нет такого класса " + name);
+        File f = new File(name + ".class");
+        if (!f.isFile())
+            logger.error(String.format("Класс %s не найден", name), new ClassNotFoundException());
+
         InputStream ins = null;
-        try{
+        try {
             ins = new BufferedInputStream(new FileInputStream(f));
-            byte[]b = new byte[(int)f.length()];
+            byte[] b = new byte[(int) f.length()];
             int length = ins.read(b);
+            int indexOf = name.lastIndexOf(File.separator)+1;
+            logger.info(String.format("Создание класса '%s'", name.substring(indexOf)));
             return defineClass(null, b, 0, length);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ClassNotFoundException("Проблемы с байт кодом");
-        }
-        finally {
+        } finally {
             try {
                 Objects.requireNonNull(ins).close();
             } catch (IOException e) {
