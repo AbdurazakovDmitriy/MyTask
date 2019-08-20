@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 public final class DriverManager {
     private static WebDriver webDriver;
-
+    //todo map of drivers, sessionId
     private DriverManager() {
     }
 
@@ -30,7 +30,6 @@ public final class DriverManager {
                         String className = String.format("org.openqa.selenium.%s.%s", reader.getAttributeValue(null, "type").toLowerCase().replaceAll("driver",""),reader.getAttributeValue(null, "type"));
                         Class<?> clazz = Class.forName(className);
                         webDriver = (WebDriver) clazz.getConstructor().newInstance();
-
                     }
                 }
             } catch (XMLStreamException | IOException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
