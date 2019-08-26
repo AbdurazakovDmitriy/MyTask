@@ -28,12 +28,6 @@ public class Builder {
     private static final String CHROME_PATH = "ChromePath";
     private static final String FIREFOX_PATH = "FirefoxPath";
 
-    public static void main(String[] args) {
-//        String chromePath = parseDriverPath(CHROME);
-//        String firefoxPath = parseDriverPath(FIREFOX);
-        buildPage(CHROME, "LoginPage");
-//        System.out.println(buildPage(CHROME, "AnotherPage").getSimpleName());
-    }
 
 
     public static synchronized List<ElementPattern> parsePage(String pageName) {
@@ -66,7 +60,7 @@ public class Builder {
     }
 
 
-    public static Class buildPage(String driverType, String pageName) {
+    public static synchronized Class buildPage(String driverType, String pageName) {
         String basicPage = null;
         try {
             basicPage = FileUtils.readFileToString(new File("./src/main/resources/PagePattern.pattern"));
@@ -85,7 +79,6 @@ public class Builder {
             stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getAttribute("name"))
                     .replaceAll("pathHolder", elementPattern.getAttribute(String.format("%sPath", driverType.toLowerCase())))
                     .replaceAll("typeHolder", elementPattern.getAttribute("type")));
-
         }
         String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName);
         File pageFile = new File(pageClassname);

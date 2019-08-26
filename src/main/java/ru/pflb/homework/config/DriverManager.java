@@ -14,18 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class DriverManager {
-    private static WebDriver webDriver;
     private static ThreadLocal<Map<String, WebDriver>> drivers;
 
     static {
         drivers = new ThreadLocal<>();
     }
 
-    //todo map of drivers, sessionId
+    //todo sessionId
 
     public static synchronized WebDriver get(String driverType) {
-
-        if (driverType != null && !driverType.equals("") && drivers.get()!=null&&drivers.get().containsKey(driverType)) {
+        if (driverType != null && !driverType.equals("") && drivers.get() != null && drivers.get().containsKey(driverType)) {
             return drivers.get().get(driverType);
         } else {
             try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
@@ -36,10 +34,8 @@ public final class DriverManager {
                         System.setProperty(reader.getAttributeValue(null, "key"), reader.getAttributeValue(null, "filePath"));
                         String className = String.format("org.openqa.selenium.%s.%s", reader.getAttributeValue(null, "type")
                                 .toLowerCase()
-                                .replaceAll("driver",""),reader.getAttributeValue(null, "type"));
+                                .replaceAll("driver", ""), reader.getAttributeValue(null, "type"));
                         Class<?> clazz = Class.forName(className);
-
-                        //todo инициализация драйвера для WebDriverWait
                         WebDriver driver = (WebDriver) clazz.getConstructor().newInstance();
                         Map<String, WebDriver> driverMap = new HashMap<>();
                         driverMap.put(driverType, driver);
@@ -49,7 +45,6 @@ public final class DriverManager {
             } catch (XMLStreamException | IOException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
             return drivers.get().get(driverType);
         }
     }
