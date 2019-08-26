@@ -1,7 +1,7 @@
 <ModelType>
     <Drivers>
-        <Driver type="ChromeDriver" filePath="D:\chromedriver\chromedriver.exe" key="webdriver.chrome.driver"/>
-        <Driver type="FirefoxDriver" filePath="D:\firefoxdriver\geckodriver.exe" key="webdriver.gecko.driver"/>
+        <Driver type="ChromeDriver" filePath="D:\Users\user\drivers\chromedriver.exe" key="webdriver.chrome.driver"/>
+        <Driver type="FirefoxDriver" filePath="D:\Users\user\drivers\geckodriver.exe" key="webdriver.gecko.driver"/>
     </Drivers>
     <Pages>
         <Page name="LoginPage">

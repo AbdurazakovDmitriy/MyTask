@@ -10,5 +10,7 @@ import ru.pflb.homework.elementModels.Label;
 
 @Page("")
 public class PageName extends AbstractPage {
-
+    public PageName() {
+        super("driverType");
+    }
 }

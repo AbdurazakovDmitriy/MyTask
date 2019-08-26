@@ -13,9 +13,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static ru.pflb.homework.builder.Builder.CHROME;
+
 public class PageMapper {
-    public static Map<String, Class<?>> classMap;
-    public static Map<Class<?>, Object> objectClass;
+    public static final Map<String, Class<?>> classMap;
+    public static final Map<Class<?>, Object> objectClass;
 
     static {
         classMap = new HashMap<>();
@@ -23,10 +25,11 @@ public class PageMapper {
         populatePage();
     }
 
-    public static void main(String[] args) {
-        DriverManager.get("ChromeDriver");
-        System.out.println(getPage("LoginPage").getClass().getName());
-    }
+//    public static void main(String[] args) {
+//        Builder.buildPage(CHROME, "LoginPage");
+//        DriverManager.get("ChromeDriver");
+//        System.out.println(getPage("LoginPage").getClass().getName());
+//    }
 
     @SuppressWarnings("unchecked")
     public static Object getPage(String className) {
@@ -51,13 +54,12 @@ public class PageMapper {
     }
 
     private static void populatePage() {
-        String pagesPath = System.getProperty("user.dir");
+        String separator = System.getProperty("file.separator");
+        String pagesPath = System.getProperty("user.dir")+separator+"src" + separator+"main";
         Collection<File> files = FileUtils.listFiles(new File(pagesPath), new String[] {"java"}, true);
         String sep = File.separator;
         Set<Class> pageClasses = files.stream()
-            .map(o -> o.getPath().replace("src" + sep + "main" + sep + "java" + sep, "")
-                .replace(pagesPath + sep, "")
-                .replaceAll("\\.java", "").replace(sep, ".")).filter(o -> {
+            .map(o -> o.getPath().substring(o.getPath().indexOf("ru"+sep+"pflb")).replaceAll(sep+sep,"\\.").replaceAll(".java","")).filter(o -> {
                 try {
                     return Class.forName(o).isAnnotationPresent(Page.class)||Class.forName(o).isAnnotationPresent(Pages.class);
                 } catch (ClassNotFoundException e) {

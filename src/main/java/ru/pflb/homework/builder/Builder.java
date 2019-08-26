@@ -73,16 +73,19 @@ public class Builder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        basicPage = Objects.requireNonNull(basicPage).replaceFirst("@Page\\(\"(.*)\"\\)", "@Page\\(\"" + pageName + "\"\\)");
-        basicPage = basicPage.replaceFirst("PageName", pageName);
+        basicPage = Objects.requireNonNull(basicPage)
+                .replaceFirst("@Page\\(\"(.*)\"\\)", "@Page\\(\"" + pageName + "\"\\)")
+                .replaceAll("driverType", driverType + "Driver");
+        basicPage = basicPage.replaceAll("PageName", pageName);
         int indexOfSelectableElement = basicPage.indexOf('{');
         StringBuilder stringBuilder = new StringBuilder(basicPage);
         List<ElementPattern> elementList = parsePage(pageName);
-        String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)DriverManager.get().findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
+        String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)DriverManager.get(\"driverType\").findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
         for (ElementPattern elementPattern : elementList) {
             stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getAttribute("name"))
-                .replaceAll("pathHolder",elementPattern.getAttribute(String.format("%sPath",driverType.toLowerCase())))
-                .replaceAll("typeHolder", elementPattern.getAttribute("type")));
+                    .replaceAll("pathHolder", elementPattern.getAttribute(String.format("%sPath", driverType.toLowerCase())))
+                    .replaceAll("typeHolder", elementPattern.getAttribute("type")));
+
         }
         String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName);
         File pageFile = new File(pageClassname);

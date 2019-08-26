@@ -10,16 +10,23 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class DriverManager {
     private static WebDriver webDriver;
-    //todo map of drivers, sessionId
-    private DriverManager() {
+    private static ThreadLocal<Map<String, WebDriver>> drivers;
+
+    static {
+        drivers = new ThreadLocal<>();
     }
 
+    //todo map of drivers, sessionId
+
     public static synchronized WebDriver get(String driverType) {
-        if (driverType != null && !driverType.equals("") && webDriver != null && webDriver.getClass().getSimpleName().equals(driverType)) {
-            return webDriver;
+
+        if (driverType != null && !driverType.equals("") && drivers.get()!=null&&drivers.get().containsKey(driverType)) {
+            return drivers.get().get(driverType);
         } else {
             try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
                 XMLStreamReader reader = processor.getReader();
@@ -27,19 +34,24 @@ public final class DriverManager {
                     int event = reader.next();
                     if (event == XMLEvent.START_ELEMENT && reader.getLocalName().equals("Driver") && reader.getAttributeValue(null, "type").equals(driverType)) {
                         System.setProperty(reader.getAttributeValue(null, "key"), reader.getAttributeValue(null, "filePath"));
-                        String className = String.format("org.openqa.selenium.%s.%s", reader.getAttributeValue(null, "type").toLowerCase().replaceAll("driver",""),reader.getAttributeValue(null, "type"));
+                        String className = String.format("org.openqa.selenium.%s.%s", reader.getAttributeValue(null, "type")
+                                .toLowerCase()
+                                .replaceAll("driver",""),reader.getAttributeValue(null, "type"));
                         Class<?> clazz = Class.forName(className);
-                        webDriver = (WebDriver) clazz.getConstructor().newInstance();
+
+                        //todo инициализация драйвера для WebDriverWait
+                        WebDriver driver = (WebDriver) clazz.getConstructor().newInstance();
+                        Map<String, WebDriver> driverMap = new HashMap<>();
+                        driverMap.put(driverType, driver);
+                        drivers.set(driverMap);
                     }
                 }
             } catch (XMLStreamException | IOException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            return webDriver;
+
+            return drivers.get().get(driverType);
         }
     }
 
-    public static synchronized WebDriver get() {
-        return webDriver;
-    }
 }
