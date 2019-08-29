@@ -1,7 +1,9 @@
 package ru.pflb.homework.config;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import ru.pflb.homework.builder.StaxStreamProcessor;
+import ru.pflb.homework.utils.CustomLogger;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -12,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public final class DriverManager {
     private static ThreadLocal<Map<String, WebDriver>> drivers;
@@ -47,6 +50,32 @@ public final class DriverManager {
             }
             return drivers.get().get(driverType);
         }
+    }
+
+
+
+    public static synchronized WebDriver getDW(String driverType) throws IOException, XMLStreamException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if (driverType != null && !driverType.equals("") && drivers.get() != null && drivers.get().containsKey(driverType))
+            return drivers.get().get(driverType);
+         else {
+            try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
+                XMLStreamReader reader = processor.getReader();
+                while (reader.hasNext()) {
+                    int event = reader.next();
+                    if (event == XMLEvent.START_ELEMENT && reader.getLocalName().equals("Driver") && reader.getAttributeValue(null, "type").equals(driverType)) {
+                        String driverTypeName = reader.getAttributeValue(null, "type");
+                        String shortDriverType = driverTypeName.substring(0,driverTypeName.indexOf("Driver"));
+                        String driverOptionsName = "org.openqa.selenium."+shortDriverType.toLowerCase()+"."+shortDriverType+"Options";
+                        Capabilities driverOptions = (Capabilities) Class.forName(driverOptionsName).getDeclaredConstructor().newInstance();
+                        CustomLogger.debug(String.format("Created driverOptions '%s'",driverOptionsName));//ChromeOptions или FireFoxOptions
+
+
+
+                    }
+                }
+            }
+        }
+         return null;
     }
 
 }
