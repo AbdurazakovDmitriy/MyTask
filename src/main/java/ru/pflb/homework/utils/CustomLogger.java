@@ -24,11 +24,16 @@ public class CustomLogger {
         throw new AssertionError(message);
     }
 
-    public void fail(String message, Throwable throwable) {
+    public static void fail(String message, Throwable throwable) {
         logger.error(message,throwable);
         MyException resolve=throwable instanceof MyException
                 ? ((MyException) throwable)
                 : new MyUncheckedException(message,throwable);
         resolve.resolve();
+    }
+
+    public static void debug(String message) {
+        logger.debug(message);
+        System.out.println(message);
     }
 }

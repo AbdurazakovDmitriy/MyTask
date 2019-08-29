@@ -1,7 +1,9 @@
 package ru.pflb.homework.config;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import ru.pflb.homework.builder.StaxStreamProcessor;
+import ru.pflb.homework.utils.CustomLogger;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -13,19 +15,18 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public final class DriverManager {
-    private static WebDriver webDriver;
     private static ThreadLocal<Map<String, WebDriver>> drivers;
 
     static {
         drivers = new ThreadLocal<>();
     }
 
-    //todo map of drivers, sessionId
+    //todo sessionId
 
     public static synchronized WebDriver get(String driverType) {
-
-        if (driverType != null && !driverType.equals("") && drivers.get()!=null&&drivers.get().containsKey(driverType)) {
+        if (driverType != null && !driverType.equals("") && drivers.get() != null && drivers.get().containsKey(driverType)) {
             return drivers.get().get(driverType);
         } else {
             try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
@@ -36,10 +37,8 @@ public final class DriverManager {
                         System.setProperty(reader.getAttributeValue(null, "key"), reader.getAttributeValue(null, "filePath"));
                         String className = String.format("org.openqa.selenium.%s.%s", reader.getAttributeValue(null, "type")
                                 .toLowerCase()
-                                .replaceAll("driver",""),reader.getAttributeValue(null, "type"));
+                                .replaceAll("driver", ""), reader.getAttributeValue(null, "type"));
                         Class<?> clazz = Class.forName(className);
-
-                        //todo инициализация драйвера для WebDriverWait
                         WebDriver driver = (WebDriver) clazz.getConstructor().newInstance();
                         Map<String, WebDriver> driverMap = new HashMap<>();
                         driverMap.put(driverType, driver);
@@ -49,9 +48,34 @@ public final class DriverManager {
             } catch (XMLStreamException | IOException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
             return drivers.get().get(driverType);
         }
+    }
+
+
+
+    public static synchronized WebDriver getDW(String driverType) throws IOException, XMLStreamException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if (driverType != null && !driverType.equals("") && drivers.get() != null && drivers.get().containsKey(driverType))
+            return drivers.get().get(driverType);
+         else {
+            try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
+                XMLStreamReader reader = processor.getReader();
+                while (reader.hasNext()) {
+                    int event = reader.next();
+                    if (event == XMLEvent.START_ELEMENT && reader.getLocalName().equals("Driver") && reader.getAttributeValue(null, "type").equals(driverType)) {
+                        String driverTypeName = reader.getAttributeValue(null, "type");
+                        String shortDriverType = driverTypeName.substring(0,driverTypeName.indexOf("Driver"));
+                        String driverOptionsName = "org.openqa.selenium."+shortDriverType.toLowerCase()+"."+shortDriverType+"Options";
+                        Capabilities driverOptions = (Capabilities) Class.forName(driverOptionsName).getDeclaredConstructor().newInstance();
+                        CustomLogger.debug(String.format("Created driverOptions '%s'",driverOptionsName));//ChromeOptions или FireFoxOptions
+
+
+
+                    }
+                }
+            }
+        }
+         return null;
     }
 
 }

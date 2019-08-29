@@ -3,7 +3,6 @@ package ru.pflb.homework.builder;
 import org.apache.commons.io.FileUtils;
 import ru.pflb.homework.annotations.Page;
 import ru.pflb.homework.annotations.Pages;
-import ru.pflb.homework.config.DriverManager;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -13,10 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static ru.pflb.homework.builder.Builder.CHROME;
-
 public class PageMapper {
-    public static final Map<String, Class<?>> classMap;
+    public static final  Map<String, Class<?>> classMap;
     public static final Map<Class<?>, Object> objectClass;
 
     static {
@@ -25,14 +22,9 @@ public class PageMapper {
         populatePage();
     }
 
-//    public static void main(String[] args) {
-//        Builder.buildPage(CHROME, "LoginPage");
-//        DriverManager.get("ChromeDriver");
-//        System.out.println(getPage("LoginPage").getClass().getName());
-//    }
 
     @SuppressWarnings("unchecked")
-    public static Object getPage(String className) {
+    public static synchronized Object getPage(String className) {
         if(className==null)
             return null;
         else if(!classMap.keySet().contains(className))
@@ -53,7 +45,7 @@ public class PageMapper {
         return null;
     }
 
-    private static void populatePage() {
+    private static synchronized void populatePage() {
         String separator = System.getProperty("file.separator");
         String pagesPath = System.getProperty("user.dir")+separator+"src" + separator+"main";
         Collection<File> files = FileUtils.listFiles(new File(pagesPath), new String[] {"java"}, true);
