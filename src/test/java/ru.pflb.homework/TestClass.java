@@ -25,38 +25,38 @@ public class TestClass {
     volatile Map<String, WebDriver> local = new Hashtable<>();
     @Test
     public void test() throws NoSuchMethodException, IOException, XMLStreamException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, InterruptedException {
-
-
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        GeckoDriverService geckoDriverService = new GeckoDriverService.Builder().usingDriverExecutable(new File("D:\\Users\\user\\drivers\\geckodriver.exe")).build();
-        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        firefoxOptions.addArguments("--start-maximized");
-        WebDriver firefoxDriver = new FirefoxDriver(geckoDriverService,firefoxOptions);
-
-
-
-        local.put("Firefox", firefoxDriver);
-
-
-        ChromeOptions chromeOptions1 = new ChromeOptions();
-        ChromeDriverService chromeDriverService = new ChromeDriverService.Builder().usingDriverExecutable(new File("D:\\Users\\user\\drivers\\chromedriver.exe")).build();
-        chromeOptions1.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        chromeOptions1.addArguments("--start-maximized");
-        WebDriver chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions1);
-
-        local.put("Chrome",chromeDriver);
+//
+//
+//        FirefoxOptions firefoxOptions = new FirefoxOptions();
+//        GeckoDriverService geckoDriverService = new GeckoDriverService.Builder().usingDriverExecutable(new File("D:\\Users\\user\\drivers\\geckodriver.exe")).build();
+//        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+//        firefoxOptions.addArguments("--start-maximized");
+//        WebDriver firefoxDriver = new FirefoxDriver(geckoDriverService,firefoxOptions);
+//
+//
+//
+//        local.put("Firefox", firefoxDriver);
+//
+//
+//        ChromeOptions chromeOptions1 = new ChromeOptions();
+//        ChromeDriverService chromeDriverService = new ChromeDriverService.Builder().usingDriverExecutable(new File("D:\\Users\\user\\drivers\\chromedriver.exe")).build();
+//        chromeOptions1.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+//        chromeOptions1.addArguments("--start-maximized");
+//        WebDriver chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions1);
+//
+//        local.put("Chrome",chromeDriver);
 
 //        local.get().get("Firefox").get("https://www.google.com/search?q=sdf&oq=sdf&aqs=chrome..69i57j0l5.1059j0j8&sourceid=chrome&ie=UTF-8");
 //        local.get().get("Chrome").get("https://www.google.com/search?q=sdf&oq=sdf&aqs=chrome..69i57j0l5.1059j0j8&sourceid=chrome&ie=UTF-8");
         //local.get().get("Firefox").get("https://www.google.com/search?q=sdf&oq=sdf&aqs=chrome..69i57j0l5.1059j0j8&sourceid=chrome&ie=UTF-8");
         //todo работает в двух потоках. раскоментить
-//        DriverManager.getDW("ChromeDriver");
+        DriverManager.getDW("ChromeDriver");
 
-        ChromeRunner chromeRunner = new ChromeRunner();
-        FirefoxRunner firefoxRunner = new FirefoxRunner();
-        chromeRunner.start();
-        firefoxRunner.start();
-        Thread.sleep(1000);
+//        ChromeRunner chromeRunner = new ChromeRunner();
+//        FirefoxRunner firefoxRunner = new FirefoxRunner();
+//        chromeRunner.start();
+//        firefoxRunner.start();
+//        Thread.sleep(1000);
     }
 
     class ChromeRunner extends Thread {
