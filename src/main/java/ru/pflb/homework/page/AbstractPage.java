@@ -9,7 +9,7 @@ public class AbstractPage {
 
 
     public AbstractPage(String driverType) {
-        wait = new WebDriverWait(DriverManager.get(driverType),10);
+        wait = new WebDriverWait(DriverManager.getWD(driverType),10);
     }
 
 }
