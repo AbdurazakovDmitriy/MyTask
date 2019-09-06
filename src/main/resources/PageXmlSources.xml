@@ -1,6 +1,6 @@
 <ModelType>
     <Drivers>
-        <Driver type="ChromeDriver" filePath="C:\tools\selenium\chromedriver.exe" key="webdriver.chrome.driver" serviceType = "ChromeDriverService"/>
+        <Driver type="ChromeDriver" filePath="D:\Users\user\drivers\chromedriver.exe" key="webdriver.chrome.driver" serviceType = "ChromeDriverService"/>
         <Driver type="FirefoxDriver" filePath="D:\Users\user\drivers\geckodriver.exe" key="webdriver.gecko.driver" serviceType = "GeckoDriverService"/>
     </Drivers>
     <Pages>

@@ -3,9 +3,11 @@ package ru.pflb.homework.config;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.service.DriverService;
 import ru.pflb.homework.builder.StaxStreamProcessor;
 import ru.pflb.homework.utils.CustomLogger;
+import ru.pflb.homework.utils.CustomReflection;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -62,7 +64,7 @@ public final class DriverManager {
         if (driverType != null && !driverType.equals("") && drivers.get() != null && drivers.get().containsKey(driverType)) {
             return drivers.get().get(driverType);
         } else {
-            try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
+            try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) { //todo забуфферизировать файл
                 XMLStreamReader reader = processor.getReader();
                 while (reader.hasNext()) {
                     int event = reader.next();
@@ -71,7 +73,8 @@ public final class DriverManager {
                         String shortDriverType = driverTypeName.substring(0, driverTypeName.indexOf("Driver"));
                         String driverOptionsName = "org.openqa.selenium." + shortDriverType.toLowerCase() + "." + shortDriverType + "Options";
                         Class<?> driverOptionsClass = Class.forName(driverOptionsName);
-                        Object driverOptions = driverOptionsClass.getDeclaredConstructor().newInstance();
+//                        Object driverOptions = driverOptionsClass.getDeclaredConstructor().newInstance();
+                        Object driverOptions = CustomReflection.createNewInstanceOr(driverOptionsClass,null);
                         CustomLogger.debug(String.format("Created driverOptions '%s'", driverOptionsName));//ChromeOptions или FireFoxOptions
                         //todo
                         String driverServiceName = "org.openqa.selenium." + shortDriverType.toLowerCase() + "." + reader.getAttributeValue(null, "serviceType");
@@ -79,6 +82,7 @@ public final class DriverManager {
 
                         Method[] methods = driverServiceClass.getClasses()[1].getDeclaredMethods();
                         Method usingDriverExecutable = Arrays.stream(methods).filter(o -> o.getName().equals("usingDriverExecutable")).findFirst().get();
+
                         Object driverBuilder = driverServiceClass.getDeclaredClasses()[0].getDeclaredConstructor().newInstance();
                         usingDriverExecutable.setAccessible(true);
                         usingDriverExecutable.invoke(driverBuilder, new File(reader.getAttributeValue(null, "filePath")));
