@@ -73,31 +73,22 @@ public final class DriverManager {
                         String shortDriverType = driverTypeName.substring(0, driverTypeName.indexOf("Driver"));
                         String driverOptionsName = "org.openqa.selenium." + shortDriverType.toLowerCase() + "." + shortDriverType + "Options";
                         Class<?> driverOptionsClass = Class.forName(driverOptionsName);
-//                        Object driverOptions = driverOptionsClass.getDeclaredConstructor().newInstance();
                         Object driverOptions = CustomReflection.createNewInstanceOr(driverOptionsClass,null);
                         CustomLogger.debug(String.format("Created driverOptions '%s'", driverOptionsName));//ChromeOptions или FireFoxOptions
-                        //todo
                         String driverServiceName = "org.openqa.selenium." + shortDriverType.toLowerCase() + "." + reader.getAttributeValue(null, "serviceType");
                         Class<?> driverServiceClass = Class.forName(driverServiceName);
-
-                        Method[] methods = driverServiceClass.getClasses()[1].getDeclaredMethods();
-                        Method usingDriverExecutable = Arrays.stream(methods).filter(o -> o.getName().equals("usingDriverExecutable")).findFirst().get();
-
-                        Object driverBuilder = driverServiceClass.getDeclaredClasses()[0].getDeclaredConstructor().newInstance();
-                        usingDriverExecutable.setAccessible(true);
-                        usingDriverExecutable.invoke(driverBuilder, new File(reader.getAttributeValue(null, "filePath")));
+                        Class driverBuilderClass = CustomReflection.getClazz(driverServiceClass,"Builder");
+                        Object driverBuilder = CustomReflection.createNewInstanceOr(driverBuilderClass,null);
+                        CustomReflection.invokeOr(driverBuilder,"usingDriverExecutable", null, new File(reader.getAttributeValue(null, "filePath")));
                         Object driverService = ((DriverService.Builder) driverBuilder).build();
                         CustomLogger.debug(String.format("Created driverService '%s'",driverServiceName));
-
-                        Method[] driverOptionsMethods = driverOptionsClass.getDeclaredMethods();
-                        Arrays.stream(driverOptionsMethods).filter(o -> o.getName().equals("setPageLoadStrategy")).findFirst().get().invoke(driverOptions, PageLoadStrategy.NORMAL);
-//                        Arrays.stream(driverOptionsMethods).filter(o -> o.getName().equals("addArguments")).findFirst().get().invoke(driverOptions, "--start-maximized");
-
+                        CustomReflection.invokeOr(driverOptions,"setPageLoadStrategy", null,PageLoadStrategy.NORMAL);
+                        CustomReflection.invokeOr(driverOptions,"addArguments", null,"--start-maximized");
                         String className = String.format("org.openqa.selenium.%s.%s", reader.getAttributeValue(null, "type")
                             .toLowerCase()
                             .replaceAll("driver", ""), reader.getAttributeValue(null, "type"));
                         Class<?> clazz = Class.forName(className);
-                        WebDriver driver = (WebDriver) clazz.getDeclaredConstructors()[0].newInstance(driverService, driverOptions);
+                        WebDriver driver = (WebDriver)CustomReflection.createNewInstanceOr(clazz,null, driverService, driverOptions);
                         Map<String, WebDriver> driverMap = new HashMap<>();
                         driverMap.put(driverType, driver);
                         drivers.set(driverMap);

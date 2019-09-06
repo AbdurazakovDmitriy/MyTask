@@ -50,7 +50,7 @@ public class TestClass {
 //        local.get().get("Chrome").get("https://www.google.com/search?q=sdf&oq=sdf&aqs=chrome..69i57j0l5.1059j0j8&sourceid=chrome&ie=UTF-8");
         //local.get().get("Firefox").get("https://www.google.com/search?q=sdf&oq=sdf&aqs=chrome..69i57j0l5.1059j0j8&sourceid=chrome&ie=UTF-8");
         //todo работает в двух потоках. раскоментить
-        DriverManager.getDW("ChromeDriver");
+        DriverManager.getDW("FirefoxDriver");
 
 //        ChromeRunner chromeRunner = new ChromeRunner();
 //        FirefoxRunner firefoxRunner = new FirefoxRunner();
