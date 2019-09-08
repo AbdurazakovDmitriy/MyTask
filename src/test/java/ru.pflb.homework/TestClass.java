@@ -19,7 +19,7 @@ public class TestClass {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        Builder.buildPage("Chrome", "LoginPage");
+        Builder.buildPage("ChromeDriver", "LoginPage");
     }
 
     class ChromeRunner extends Thread {
