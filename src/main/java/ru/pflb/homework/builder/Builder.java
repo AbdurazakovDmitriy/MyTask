@@ -77,8 +77,9 @@ public class Builder {
         String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)DriverManager.getWD(\"driverType\").findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
         for (ElementPattern elementPattern : elementList) {
             stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getAttribute("name"))
-                    .replaceAll("pathHolder", elementPattern.getAttribute(String.format("%sPath", driverType.toLowerCase())))
-                    .replaceAll("typeHolder", elementPattern.getAttribute("type")));
+                    .replaceAll("pathHolder", elementPattern.getAttribute(String.format("%sPath", driverType.replaceAll("Driver","").toLowerCase())))
+                    .replaceAll("typeHolder", elementPattern.getAttribute("type"))
+                    .replaceAll("driverType",driverType));
         }
         String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName);
         File pageFile = new File(pageClassname);
