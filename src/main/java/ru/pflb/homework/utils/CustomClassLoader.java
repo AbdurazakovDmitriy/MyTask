@@ -1,4 +1,4 @@
-package ru.pflb.homework;
+package ru.pflb.homework.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
