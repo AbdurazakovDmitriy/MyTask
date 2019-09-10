@@ -69,7 +69,7 @@ public class Builder {
         }
         basicPage = Objects.requireNonNull(basicPage)
                 .replaceFirst("@Page\\(\"(.*)\"\\)", "@Page\\(\"" + pageName + "\"\\)")
-                .replaceAll("driverType", driverType + "Driver");
+                .replaceAll("driverType", driverType);
         basicPage = basicPage.replaceAll("PageName", pageName);
         int indexOfSelectableElement = basicPage.indexOf('{');
         StringBuilder stringBuilder = new StringBuilder(basicPage);
@@ -92,7 +92,6 @@ public class Builder {
         String sep = properties.getProperty("file.separator");
         String jrePath = properties.getProperty("java.home");
         String classFileDirectory = String.format(".%starget%sclasses", sep, sep);
-        Element.class.getPackageName();
         String javac = "\"" + jrePath + sep + "bin" + sep + "javac\"";
         String command = String.format("%s -d %s -classpath \"%s\" %s", javac, classFileDirectory, System.getProperty("java.class.path"), pageFile.getAbsolutePath());
         Process process = null;
@@ -129,7 +128,7 @@ public class Builder {
                 if (event == XMLEvent.START_ELEMENT) {
                     String tagName = reader.getLocalName();
                     if (tagName.equals("Page")) {
-                        String pageName = reader.getAttributeValue(null, NAME);
+                        String pageName = reader.getAttributeValue(null, "name");
                         File javaFile = new File(String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName));
                         javaFile.deleteOnExit();
                     }

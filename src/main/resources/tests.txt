@@ -46,3 +46,4 @@ java.lang.ClassNotFoundException: null
 	at org.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:73) ~[testng-plugin.jar:na]
 	at org.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:123) ~[testng-plugin.jar:na]
 105  [main] INFO  ru.pflb.homework.CustomClassLoader - Создание класса 'LoginPage'
+124  [main] INFO  ru.pflb.homework.CustomClassLoader - Создание класса 'LoginPage'
