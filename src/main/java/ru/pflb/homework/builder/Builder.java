@@ -1,8 +1,7 @@
 package ru.pflb.homework.builder;
 
 import org.apache.commons.io.FileUtils;
-import ru.pflb.homework.CustomClassLoader;
-import ru.pflb.homework.annotations.Element;
+import ru.pflb.homework.utils.CustomClassLoader;
 import ru.pflb.homework.elementModels.ElementPattern;
 
 import javax.xml.stream.XMLStreamException;
