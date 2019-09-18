@@ -3,6 +3,7 @@ package ru.pflb.homework;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 import ru.pflb.homework.builder.Builder;
+import ru.pflb.homework.builder.PageMapper;
 import ru.pflb.homework.config.DriverManager;
 import ru.pflb.homework.utils.CustomLogger;
 
@@ -19,7 +20,10 @@ public class TestClass {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        Builder.buildPage("ChromeDriver", "LoginPage");
+
+        String s;
+        s= PageMapper.getPage("LoginPage").getClass().getSimpleName();
+        System.out.println(s);
     }
 
     class ChromeRunner extends Thread {
@@ -27,7 +31,7 @@ public class TestClass {
         public void run() {
             CustomLogger.debug("ChromeDriver");
             WebDriver driver =  DriverManager.getWD("ChromeDriver");
-            driver.get("https://www.google.com/search?q=sdf&oq=sdf&aqs=chrome..69i57j0l5.1059j0j8&sourceid=chrome&ie=UTF-8");
+            driver.get("https://www.google.com");
 
 //            driver.close();
 
@@ -38,7 +42,7 @@ public class TestClass {
         public void run() {
             CustomLogger.debug("FirefoxDriver");
             WebDriver driver =  DriverManager.getWD("FirefoxDriver");
-            driver.get("https://www.google.com/search?q=sdf&oq=sdf&aqs=chrome..69i57j0l5.1059j0j8&sourceid=chrome&ie=UTF-8");
+            driver.get("https://www.google.com");
 
 //            driver.close();
         }
