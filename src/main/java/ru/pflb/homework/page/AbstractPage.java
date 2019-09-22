@@ -8,8 +8,8 @@ public class AbstractPage {
     private WebDriverWait wait;
 
 
-    public AbstractPage(String driverType) {
-        wait = new WebDriverWait(DriverManager.getWD(driverType),10);
+    public AbstractPage(String sessionId) {
+        wait = new WebDriverWait(DriverManager.local.get(sessionId),10);
     }
 
 }

@@ -19,7 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 public final class DriverManager {
-    private static volatile Map<String, WebDriver> local;
+    public static volatile Map<String, WebDriver> local;
+
     static {
         local = new ConcurrentHashMap<>();
     }
