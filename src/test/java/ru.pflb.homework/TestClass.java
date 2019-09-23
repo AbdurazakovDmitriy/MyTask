@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.pflb.homework.builder.Builder;
+import ru.pflb.homework.builder.PageMapper;
 import ru.pflb.homework.config.DriverManager;
 import ru.pflb.homework.utils.CustomLogger;
 
@@ -35,7 +36,8 @@ public class TestClass {
     public void test(String driverType){
 
         Builder.buildPage(driverType, "LoginPage");
-        WebDriver driver =  DriverManager.getWD(driverType);
+        PageMapper.getPage("LoginPage");
+        WebDriver driver =  DriverManager.createWD(driverType);
         Map<WebDriver,String> map = new ConcurrentHashMap<>();
         map.put(driver,driverType);
         local.set(map);
