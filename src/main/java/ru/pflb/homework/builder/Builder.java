@@ -29,7 +29,7 @@ public class Builder {
 
 
 
-    public static synchronized List<ElementPattern> parsePage(String pageName) {
+    private static synchronized List<ElementPattern> parsePage(String pageName) {
         List<ElementPattern> elementList = new ArrayList<>();
         try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
             XMLStreamReader reader = processor.getReader();

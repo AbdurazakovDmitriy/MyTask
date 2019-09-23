@@ -2,10 +2,11 @@ package ru.pflb.homework.stepdefinitions;
 
 import cucumber.api.java.bg.И;
 import org.openqa.selenium.WebDriver;
-import ru.pflb.homework.ProcessingThread;
 import ru.pflb.homework.builder.Builder;
 import ru.pflb.homework.builder.PageMapper;
+import ru.pflb.homework.builder.ProcessingThread;
 import ru.pflb.homework.config.DriverManager;
+import ru.pflb.homework.utils.CustomLogger;
 
 public class MyStepdefs {
     @И("выполнена авторизация")
@@ -14,7 +15,7 @@ public class MyStepdefs {
         WebDriver driver =  DriverManager.getWD(sessionId);
         driver.get("https://github.com/AbdurazakovDmitriy/MyTask");
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -32,9 +33,10 @@ public class MyStepdefs {
         }
     }
 
-    @И("Создать страницу \"(.+)\"")
+    @И("создать страницу \"(.+)\"")
     public void pageCreate(String pageName) {
         Class pageClass =  Builder.buildPage(DriverManager.getWD(((ProcessingThread)Thread.currentThread()).getSessionId()).getClass().getSimpleName(),pageName);
-        PageMapper.getPage(pageName);
+        String page =  PageMapper.getPage(pageName).getClass().getName();
+        CustomLogger.info(page);
     }
 }

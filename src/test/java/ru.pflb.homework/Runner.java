@@ -7,6 +7,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import ru.pflb.homework.builder.LocalTestNgRunner;
+import ru.pflb.homework.builder.ProcessingThread;
 import ru.pflb.homework.utils.CustomLogger;
 
 import java.util.*;

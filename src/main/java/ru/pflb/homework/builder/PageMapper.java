@@ -3,6 +3,7 @@ package ru.pflb.homework.builder;
 import org.apache.commons.io.FileUtils;
 import ru.pflb.homework.annotations.Page;
 import ru.pflb.homework.annotations.Pages;
+import ru.pflb.homework.utils.CustomReflection;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -13,8 +14,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PageMapper {
-    public static final  Map<String, Class<?>> classMap;
-    public static final Map<Class<?>, Object> objectClass;
+    private static final  Map<String, Class<?>> classMap;
+    private static final Map<Class<?>, Object> objectClass;
 
     static {
         classMap = new HashMap<>();
@@ -34,15 +35,10 @@ public class PageMapper {
         if((instance = objectClass.get(clazz))!=null) {
             return instance;
         } else {
-            try {
-                Object page = clazz.getDeclaredConstructor().newInstance();
-                objectClass.put(clazz,page);
-                return page;
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            Object page = CustomReflection.createNewInstanceOr(clazz,null);
+            objectClass.put(clazz,page);
+            return page;
         }
-        return null;
     }
 
     private static synchronized void populatePage() {

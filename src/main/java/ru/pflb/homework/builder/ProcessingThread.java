@@ -21,10 +21,6 @@ public class ProcessingThread extends Thread {
             for(Object[] scenario: scenarios) {
                 runner.runScenario(((PickleEventWrapper)scenario[0]).getPickleEvent());
             }
-
-
-
-//            runner.runScenario(((PickleEventWrapper) scenarios[0][0]).getPickleEvent());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
