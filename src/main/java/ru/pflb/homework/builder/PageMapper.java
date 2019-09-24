@@ -14,8 +14,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PageMapper {
-    private static final  Map<String, Class<?>> classMap;
-    private static final Map<Class<?>, Object> objectClass;
+    private static volatile    Map<String, Class<?>> classMap;
+    private static volatile Map<Class<?>, Object> objectClass;
 
     static {
         classMap = new HashMap<>();

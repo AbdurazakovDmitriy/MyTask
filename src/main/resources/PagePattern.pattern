@@ -1,4 +1,4 @@
-package ru.pflb.homework.page;
+package ru.pflb.homework.page.TYPEPATH;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,10 +7,11 @@ import ru.pflb.homework.annotations.Page;
 import ru.pflb.homework.annotations.Pages;
 import ru.pflb.homework.config.DriverManager;
 import ru.pflb.homework.elementModels.Label;
+import ru.pflb.homework.page.AbstractPage;
 
 @Page("")
 public class PageName extends AbstractPage {
     public PageName() {
-        super();
+
     }
 }

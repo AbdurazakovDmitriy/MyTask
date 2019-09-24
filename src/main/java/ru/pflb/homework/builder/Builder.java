@@ -68,7 +68,8 @@ public class Builder {
         }
         basicPage = Objects.requireNonNull(basicPage)
                 .replaceFirst("@Page\\(\"(.*)\"\\)", "@Page\\(\"" + pageName + "\"\\)")
-                .replaceAll("driverType", driverType);
+                .replaceAll("driverType", driverType)
+                .replaceAll("TYPEPATH",driverType.replaceAll("Driver",""));
         basicPage = basicPage.replaceAll("PageName", pageName);
         int indexOfSelectableElement = basicPage.indexOf('{');
         StringBuilder stringBuilder = new StringBuilder(basicPage);
@@ -80,7 +81,7 @@ public class Builder {
                     .replaceAll("typeHolder", elementPattern.getAttribute("type"))
                     .replaceAll("driverType",driverType));
         }
-        String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName);
+        String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s/%s.java",driverType.replaceAll("Driver",""), pageName);
         File pageFile = new File(pageClassname);
         try {
             FileUtils.write(pageFile, stringBuilder.toString());
@@ -106,7 +107,7 @@ public class Builder {
         }
         CustomClassLoader customClassLoader = new CustomClassLoader();
         try {
-            return customClassLoader.findClass(String.format("%s%sru%spflb%shomework%spage%s%s", classFileDirectory, sep, sep, sep, sep, sep, pageName));
+            return customClassLoader.findClass(String.format("%s%sru%spflb%shomework%spage%s%s%s%s", classFileDirectory, sep, sep, sep, sep,sep,driverType.replaceAll("Driver",""), sep, pageName));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -128,7 +129,7 @@ public class Builder {
                     String tagName = reader.getLocalName();
                     if (tagName.equals("Page")) {
                         String pageName = reader.getAttributeValue(null, "name");
-                        File javaFile = new File(String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName));
+                        File javaFile = new File(String.format("./src/main/java/ru/pflb/homework/page//%s.java", pageName));
                         javaFile.deleteOnExit();
                     }
                 }

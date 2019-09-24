@@ -37,16 +37,6 @@ public class TestClass {
 
         Builder.buildPage(driverType, "LoginPage");
         PageMapper.getPage("LoginPage");
-        WebDriver driver =  DriverManager.createWD(driverType);
-        Map<WebDriver,String> map = new ConcurrentHashMap<>();
-        map.put(driver,driverType);
-        local.set(map);
-        driver.get("https://translate.google.com/?hl=ru");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
