@@ -60,6 +60,8 @@ public class Builder {
 
 
     public static synchronized Class buildPage(String driverType, String pageName) {
+        File file = new File(String.format("./src/main/java/ru/pflb/homework/page/%s",driverType.replaceAll("Driver","")));
+        file.mkdir();
         String basicPage = null;
         try {
             basicPage = FileUtils.readFileToString(new File("./src/main/resources/PagePattern.pattern"));
