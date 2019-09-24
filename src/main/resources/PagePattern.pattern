@@ -8,7 +8,7 @@ import ru.pflb.homework.annotations.Pages;
 import ru.pflb.homework.config.DriverManager;
 import ru.pflb.homework.elementModels.Label;
 import ru.pflb.homework.page.AbstractPage;
-
+import ru.pflb.homework.elementModels.Button;
 @Page("")
 public class PageName extends AbstractPage {
     public PageName() {

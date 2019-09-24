@@ -38,5 +38,20 @@ public class MyStepdefs {
         Class pageClass =  Builder.buildPage(DriverManager.getWD(((ProcessingThread)Thread.currentThread()).getSessionId()).getClass().getSimpleName(),pageName);
         String page =  PageMapper.getPage(pageName).getClass().getName();
         CustomLogger.info(page);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+    @И("открыть почту")
+    public void openGMail() {
+        String url = "https://www.gmail.com/mail/help/intl/ru/about.html?de";
+        String sessionId =  ((ProcessingThread)Thread.currentThread()).getSessionId();
+        WebDriver driver =  DriverManager.getWD(sessionId);
+        driver.get(url);
+    }
+
+
 }

@@ -14,11 +14,15 @@
             <Element deprecated="true" name="info" type="Label" chromePath="//div[@class='info']"
                      firefoxPath="//div[@class='info']"/>
         </Page>
-        <Page name="AnotherPage">
-            <Element name="rs_hint" type="Label" chromePath="//div[@ng-click='close()']"
-                     firefoxPath="//div[@ng-click='close()']"/>
-            <Element name="link" type="Button" chromePath="//div[@class='info']"
-                     firefoxPath="//div[@class='info']"/>
+
+
+
+        <Page name = "GMailAbout">
+            <Element name = "signIn" type="Button" chromePath="//a[@data-g-label='Sign in']"
+                     firefoxPath="//a[@data-g-label='Sign in']"/>
+            <Element name="createAccount" type="Button" chromePath="//div[@class='maia-util']//a[@data-g-label='Create an account button']"
+                     firefoxPath="//div[@class='maia-util']//a[@data-g-label='Create an account button']"/>
+
         </Page>
     </Pages>
 
