@@ -12,6 +12,5 @@ import ru.pflb.homework.elementModels.Button;
 @Page("")
 public class PageName extends AbstractPage {
     public PageName() {
-
     }
 }

@@ -33,12 +33,9 @@ public class TestClass {
 
 
     @Test(dataProvider = "testData")
-    public void test(String driverType){
-
-        Builder.buildPage(driverType, "LoginPage");
-        PageMapper.getPage("LoginPage");
+    public void test(String driverType) {
+        System.out.println(System.getProperty("os.name"));
     }
-
 
 
 }

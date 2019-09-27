@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.pflb.homework.builder.LocalTestNgRunner;
 import ru.pflb.homework.builder.ProcessingThread;
+import ru.pflb.homework.config.DriverManager;
 import ru.pflb.homework.utils.CustomLogger;
 
 import java.util.*;
@@ -37,7 +38,7 @@ public class Runner {
 
     @Test
     public void numberedScenario()  {
-        System.setProperty("scenario.data","{2.0:ChromeDriver}");
+        System.setProperty("scenario.data","{2.0:ChromeDriver}{2.0:ChromeDriver}{2.0:ChromeDriver}{2.0:ChromeDriver}");
         String scenariosData = System.getProperty("scenario.data");
         List<String> threadData =  Arrays.stream(scenariosData.split("\\}\\{")).map(o->o.replaceAll("[{}]","")).collect(Collectors.toList());
 
@@ -78,11 +79,6 @@ public class Runner {
             ProcessingThread processingThread = new ProcessingThread(driverType,localTestNgRunner);
             runners.add(processingThread);
         });
-    }
-
-    @AfterClass
-    public void start() {
-
         runners.forEach(Thread::start);
         for (ProcessingThread processingThread : runners) {
             try {
@@ -91,6 +87,14 @@ public class Runner {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    @AfterClass
+    public void start() {
+        runners.forEach(ProcessingThread::finish);
+        DriverManager.drop();
+
     }
 
 

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -50,8 +51,7 @@ public final class DriverManager {
                             .toLowerCase()
                             .replaceAll("driver", ""), reader.getAttributeValue(null, "type"));
                     Class<?> clazz = Class.forName(className);
-                    WebDriver driver = (WebDriver) CustomReflection.createNewInstanceOr(clazz, null, driverService, driverOptions);
-                    return driver;
+                    return (WebDriver) CustomReflection.createNewInstanceOr(clazz, null, driverService, driverOptions);
                 }
             }
         } catch (XMLStreamException | IOException | ClassNotFoundException e) {
@@ -66,7 +66,11 @@ public final class DriverManager {
     }
 
     public static synchronized void setWD(String sessionId, WebDriver driver) {
-        local.put(sessionId, driver);
+        local.put(sessionId, Objects.requireNonNull(driver));
+    }
+
+    public static void drop() {
+        local.values().forEach(WebDriver::quit);
     }
 
 }

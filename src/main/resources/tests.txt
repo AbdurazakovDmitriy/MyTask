@@ -1,0 +1,4 @@
+10731 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+10993 [Thread-3] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11467 [Thread-2] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11871 [Thread-1] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'

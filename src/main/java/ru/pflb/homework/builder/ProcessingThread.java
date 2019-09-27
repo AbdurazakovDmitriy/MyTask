@@ -2,20 +2,27 @@ package ru.pflb.homework.builder;
 
 import cucumber.api.testng.PickleEventWrapper;
 import ru.pflb.homework.config.DriverManager;
+import ru.pflb.homework.utils.CustomLogger;
 
 import java.util.UUID;
 
 public class ProcessingThread extends Thread {
     private LocalTestNgRunner runner;
     private String sessionId;
-
+    private String driverType;
     public ProcessingThread(String driverType, LocalTestNgRunner runner) {
         this.runner = runner;
-        sessionId = UUID.randomUUID().toString();
-        DriverManager.setWD(sessionId, DriverManager.createWD(driverType));
+        this.driverType=driverType;
     }
     @Override
     public void run() {
+        sessionId = UUID.randomUUID().toString();
+        try {
+            DriverManager.setWD(sessionId, DriverManager.createWD(driverType));
+        } catch (Exception e){
+            CustomLogger.fail(sessionId,e);
+            return;
+        }
         Object[][] scenarios = runner.provideScenarios();
         try {
             for(Object[] scenario: scenarios) {
@@ -24,9 +31,15 @@ public class ProcessingThread extends Thread {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
+        PageMapper.drop(sessionId);
     }
 
-    public String getSessionId() {
-        return sessionId;
+
+    public void finish() {
+        runner.finish();
+    }
+
+    public static String getSessionId(){
+        return ((ProcessingThread)Thread.currentThread()).sessionId;
     }
 }

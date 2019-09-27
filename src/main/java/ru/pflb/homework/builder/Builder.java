@@ -1,13 +1,17 @@
 package ru.pflb.homework.builder;
 
+import com.sun.source.util.JavacTask;
 import org.apache.commons.io.FileUtils;
 import ru.pflb.homework.utils.CustomClassLoader;
 import ru.pflb.homework.elementModels.ElementPattern;
 
+import javax.tools.JavaCompiler;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -76,7 +80,7 @@ public class Builder {
         int indexOfSelectableElement = basicPage.indexOf('{');
         StringBuilder stringBuilder = new StringBuilder(basicPage);
         List<ElementPattern> elementList = parsePage(pageName);
-        String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)getDriver().findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
+        String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return elementFactory(typeHolder.class, By.xpath(\"pathHolder\"));\n\r}\n\r";
         for (ElementPattern elementPattern : elementList) {
             stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getAttribute("name"))
                     .replaceAll("pathHolder", elementPattern.getAttribute(String.format("%sPath", driverType.replaceAll("Driver","").toLowerCase())))
@@ -93,9 +97,15 @@ public class Builder {
         Properties properties = System.getProperties();
         String sep = properties.getProperty("file.separator");
         String jrePath = properties.getProperty("java.home");
-        String classFileDirectory = String.format(".%starget%sclasses", sep, sep);
-        String javac = "\"" + jrePath + sep + "bin" + sep + "javac\"";
-        String command = String.format("%s -d %s -classpath \"%s\" %s", javac, classFileDirectory, System.getProperty("java.class.path"), pageFile.getAbsolutePath());
+        String classFileDirectory = String.format("target%sclasses", sep, sep);
+
+        String format=System.getProperty("os.name").toLowerCase().contains("windows")
+                ? "\"%s\""
+                : "%s";
+        String javac = jrePath + sep + "bin" + sep + "javac";
+        javac=String.format(format,javac);
+        String classPath=System.getProperty("java.class.path").replaceAll("\\s","\\\\ ");
+        String command = String.format("%s -d %s -sourcepath src -classpath \"%s\" %s", javac, classFileDirectory, classPath, pageFile.getPath());
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(command);
