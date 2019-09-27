@@ -27,7 +27,7 @@ public class CustomClassLoader extends ClassLoader {
             byte[] b = new byte[(int) f.length()];
             int length = ins.read(b);
             int indexOf = name.lastIndexOf(File.separator)+1;
-            logger.info(String.format("Создание класса '%s'", name.substring(indexOf)));
+            logger.debug(String.format("Создание класса '%s'", name.substring(indexOf)));
             return defineClass(null, b, 0, length);
         } catch (Exception e) {
             e.printStackTrace();

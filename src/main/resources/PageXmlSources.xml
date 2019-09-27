@@ -1,7 +1,7 @@
 <ModelType>
     <Drivers>
-        <Driver type="ChromeDriver" filePath="D:\Users\user\drivers\chromedriver.exe" key="webdriver.chrome.driver" serviceType = "ChromeDriverService"/>
-        <Driver type="FirefoxDriver" filePath="D:\Users\user\drivers\geckodriver.exe" key="webdriver.gecko.driver" serviceType = "GeckoDriverService"/>
+        <Driver type="ChromeDriver" filePath="/Users/rshbtest/Downloads/chromedriver" serviceType = "ChromeDriverService"/>
+        <Driver type="FirefoxDriver" filePath="D:\Users\user\drivers\geckodriver.exe" serviceType = "GeckoDriverService"/>
     </Drivers>
     <Pages>
         <Page name="LoginPage">
@@ -14,11 +14,15 @@
             <Element deprecated="true" name="info" type="Label" chromePath="//div[@class='info']"
                      firefoxPath="//div[@class='info']"/>
         </Page>
-        <Page name="AnotherPage">
-            <Element name="rs_hint" type="Label" chromePath="//div[@ng-click='close()']"
-                     firefoxPath="//div[@ng-click='close()']"/>
-            <Element name="link" type="Button" chromePath="//div[@class='info']"
-                     firefoxPath="//div[@class='info']"/>
+
+
+
+        <Page name = "GMailAbout">
+            <Element name = "signIn" type="Button" chromePath="//a[@data-g-label='Sign in']"
+                     firefoxPath="//a[@data-g-label='Sign in']"/>
+            <Element name="createAccount" type="Button" chromePath="//div[@class='maia-util']//a[@data-g-label='Create an account button']"
+                     firefoxPath="//div[@class='maia-util']//a[@data-g-label='Create an account button']"/>
+
         </Page>
     </Pages>
 

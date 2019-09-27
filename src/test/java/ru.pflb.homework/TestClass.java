@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.pflb.homework.builder.Builder;
+import ru.pflb.homework.builder.PageMapper;
 import ru.pflb.homework.config.DriverManager;
 import ru.pflb.homework.utils.CustomLogger;
 
@@ -32,21 +33,9 @@ public class TestClass {
 
 
     @Test(dataProvider = "testData")
-    public void test(String driverType){
-
-        Builder.buildPage(driverType, "LoginPage");
-        WebDriver driver =  DriverManager.getWD(driverType);
-        Map<WebDriver,String> map = new ConcurrentHashMap<>();
-        map.put(driver,driverType);
-        local.set(map);
-        driver.get("https://translate.google.com/?hl=ru");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void test(String driverType) {
+        System.out.println(System.getProperty("os.name"));
     }
-
 
 
 }

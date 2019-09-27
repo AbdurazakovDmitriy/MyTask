@@ -1,13 +1,17 @@
 package ru.pflb.homework.builder;
 
+import com.sun.source.util.JavacTask;
 import org.apache.commons.io.FileUtils;
 import ru.pflb.homework.utils.CustomClassLoader;
 import ru.pflb.homework.elementModels.ElementPattern;
 
+import javax.tools.JavaCompiler;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,7 +33,7 @@ public class Builder {
 
 
 
-    public static synchronized List<ElementPattern> parsePage(String pageName) {
+    private static synchronized List<ElementPattern> parsePage(String pageName) {
         List<ElementPattern> elementList = new ArrayList<>();
         try (StaxStreamProcessor processor = new StaxStreamProcessor(Files.newInputStream(Paths.get("./src/main/resources/PageXmlSources.xml")))) {
             XMLStreamReader reader = processor.getReader();
@@ -60,6 +64,8 @@ public class Builder {
 
 
     public static synchronized Class buildPage(String driverType, String pageName) {
+        File file = new File(String.format("./src/main/java/ru/pflb/homework/page/%s",driverType.replaceAll("Driver","")));
+        file.mkdir();
         String basicPage = null;
         try {
             basicPage = FileUtils.readFileToString(new File("./src/main/resources/PagePattern.pattern"));
@@ -68,19 +74,20 @@ public class Builder {
         }
         basicPage = Objects.requireNonNull(basicPage)
                 .replaceFirst("@Page\\(\"(.*)\"\\)", "@Page\\(\"" + pageName + "\"\\)")
-                .replaceAll("driverType", driverType);
+                .replaceAll("driverType", driverType)
+                .replaceAll("TYPEPATH",driverType.replaceAll("Driver",""));
         basicPage = basicPage.replaceAll("PageName", pageName);
         int indexOfSelectableElement = basicPage.indexOf('{');
         StringBuilder stringBuilder = new StringBuilder(basicPage);
-        List<ElementPattern> elementList = parsePage(pageName);//todo переделать создание страниц
-        String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return (typeHolder)DriverManager.getWD(\"driverType\").findElement(By.xpath(\"pathHolder\"));\n\r}\n\r";
+        List<ElementPattern> elementList = parsePage(pageName);
+        String element = "\n\r@Element(\"elementNameHolder\")\n\rpublic typeHolder elementNameHolder(){\n\r return elementFactory(typeHolder.class, By.xpath(\"pathHolder\"));\n\r}\n\r";
         for (ElementPattern elementPattern : elementList) {
             stringBuilder.insert(indexOfSelectableElement + 1, element.replaceAll("elementNameHolder", elementPattern.getAttribute("name"))
                     .replaceAll("pathHolder", elementPattern.getAttribute(String.format("%sPath", driverType.replaceAll("Driver","").toLowerCase())))
                     .replaceAll("typeHolder", elementPattern.getAttribute("type"))
                     .replaceAll("driverType",driverType));
         }
-        String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName);
+        String pageClassname = String.format("./src/main/java/ru/pflb/homework/page/%s/%s.java",driverType.replaceAll("Driver",""), pageName);
         File pageFile = new File(pageClassname);
         try {
             FileUtils.write(pageFile, stringBuilder.toString());
@@ -90,9 +97,15 @@ public class Builder {
         Properties properties = System.getProperties();
         String sep = properties.getProperty("file.separator");
         String jrePath = properties.getProperty("java.home");
-        String classFileDirectory = String.format(".%starget%sclasses", sep, sep);
-        String javac = "\"" + jrePath + sep + "bin" + sep + "javac\"";
-        String command = String.format("%s -d %s -classpath \"%s\" %s", javac, classFileDirectory, System.getProperty("java.class.path"), pageFile.getAbsolutePath());
+        String classFileDirectory = String.format("target%sclasses", sep, sep);
+
+        String format=System.getProperty("os.name").toLowerCase().contains("windows")
+                ? "\"%s\""
+                : "%s";
+        String javac = jrePath + sep + "bin" + sep + "javac";
+        javac=String.format(format,javac);
+        String classPath=System.getProperty("java.class.path").replaceAll("\\s","\\\\ ");
+        String command = String.format("%s -d %s -sourcepath src -classpath \"%s\" %s", javac, classFileDirectory, classPath, pageFile.getPath());
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(command);
@@ -106,7 +119,7 @@ public class Builder {
         }
         CustomClassLoader customClassLoader = new CustomClassLoader();
         try {
-            return customClassLoader.findClass(String.format("%s%sru%spflb%shomework%spage%s%s", classFileDirectory, sep, sep, sep, sep, sep, pageName));
+            return customClassLoader.findClass(String.format("%s%sru%spflb%shomework%spage%s%s%s%s", classFileDirectory, sep, sep, sep, sep,sep,driverType.replaceAll("Driver",""), sep, pageName));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -128,7 +141,7 @@ public class Builder {
                     String tagName = reader.getLocalName();
                     if (tagName.equals("Page")) {
                         String pageName = reader.getAttributeValue(null, "name");
-                        File javaFile = new File(String.format("./src/main/java/ru/pflb/homework/page/%s.java", pageName));
+                        File javaFile = new File(String.format("./src/main/java/ru/pflb/homework/page//%s.java", pageName));
                         javaFile.deleteOnExit();
                     }
                 }

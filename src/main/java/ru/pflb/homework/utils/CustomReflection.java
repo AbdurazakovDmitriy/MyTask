@@ -1,6 +1,9 @@
 package ru.pflb.homework.utils;
 
+import org.jetbrains.annotations.Contract;
+
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -48,6 +51,15 @@ public class CustomReflection {
         };
         return getMethods(clazz).stream().filter(o -> o.getName().equals(methodName) && argMatcher.test(argTypes, o.getParameterTypes()))
                 .findFirst();
+    }
+    public static Set<Field> getFields(Class clazz) {
+        Set<Field> result = new HashSet<>();
+        if (clazz.getSuperclass() != Object.class) {
+            result.addAll(getFields(clazz.getSuperclass()));
+        }
+        result.addAll(Arrays.stream(clazz.getDeclaredFields()).collect(Collectors.toList()));
+        result.forEach(o -> o.setAccessible(true));
+        return result;
     }
 
     public static Method getMethod(Class clazz, String methodName, Class... argTypes) throws NoSuchMethodException {
@@ -104,5 +116,36 @@ public class CustomReflection {
     public static Class getClazz(Class clazz, String className) {
         Set<Class> classes = Arrays.stream(clazz.getDeclaredClasses()).collect(Collectors.toSet());
         return classes.stream().filter(o->o.getSimpleName().equals(className)).findFirst().get();
+    }
+    public static Field getField(Class clazz, String fieldName) throws NoSuchFieldException {
+        return getOptionalField(clazz, fieldName).orElseThrow(NoSuchFieldException::new);
+    }
+    private static Optional<Field> getOptionalField(Class clazz, String fieldName) {
+        BiPredicate<Class[], Class[]> argMatcher = (a1, a2) -> {
+            if (a1 == a2) {
+                return true;
+            }
+            if ((a1 == null || a2 == null) || (a1.length != a2.length)) {
+                return false;
+            }
+            for (int i = 0; i < a1.length; i++) {
+                if (!a1[i].equals(a2[i])) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        return getFields(clazz).stream().filter(o -> o.getName().equals(fieldName)).findFirst();
+    }
+
+
+    @Contract("null, _, _, -> param3")
+    @SuppressWarnings("unchecked")
+    public static <T> T getFieldValueOr(Object object, String fieldName, T defaultResult) {
+        try {
+            return (T) getField(object.getClass(), fieldName).get(object);
+        } catch (Exception e) {
+            return defaultResult;
+        }
     }
 }

@@ -6,10 +6,8 @@ import ru.pflb.homework.utils.CustomLogger;
 
 public class Button extends AbstractElement implements Clickable {
 
-    public Button(WebElement initialElement, String triggerName) {
+    public Button(WebElement initialElement) {
         super(initialElement);
-        if (triggerName != null && !triggerName.equals("")) {
-        }
     }
 
     @Override
