@@ -45,7 +45,7 @@ public class MyStepdefs {
 
     @И("создать страницу \"(.+)\"")
     public void pageCreate(String pageName) {
-        Class pageClass =  Builder.buildPage(DriverManager.getWD(ProcessingThread.getSessionId()).getClass().getSimpleName(),pageName);
+        Builder.buildPage(DriverManager.getWD(ProcessingThread.getSessionId()).getClass().getSimpleName(),pageName);
         String page =  PageMapper.getPage(pageName).getClass().getName();
         CustomLogger.info(page);
         try {
@@ -71,13 +71,7 @@ public class MyStepdefs {
 
     @И("нажать на элемент \"(.+)\"")
     public void clickOnElement(String elementName) throws IllegalAccessException, InvocationTargetException {
-        Object activePage = PageMapper.getActivePage();
-        Predicate<Element> predicate= (o1)->o1!=null&&o1.value().equals(elementName);
-        Clickable element = (Clickable) CustomReflection
-                .getMethods(activePage.getClass())
-                .stream()
-                .filter(o->predicate.test(o.getAnnotation(Element.class)))
-                .findFirst().get().invoke(activePage);
+        Clickable element = (Clickable) getActiveElement(elementName);
         element.click();
         try {
             Thread.sleep(5000);
@@ -88,26 +82,25 @@ public class MyStepdefs {
 
     @И("в поле \"(.+)\" установлено значение \"(.+)\"")
     public void setText(String fieldName, String text) throws IllegalAccessException, InvocationTargetException {
-        Object activePage = PageMapper.getActivePage();
-        Predicate<Element> predicate= (o1)->o1!=null&&o1.value().equals(fieldName);
-        TextEditable field = (TextEditable) CustomReflection
-                .getMethods(activePage.getClass())
-                .stream()
-                .filter(o->predicate.test(o.getAnnotation(Element.class)))
-                .findFirst().get().invoke(activePage);
+        TextEditable field = (TextEditable) getActiveElement(fieldName);
         field.setText(text);
     }
 
     @И("в меню \"(.+)\" выбрать пункт \"(.+)\"")
     public void selectMenuItem(String menuName, String itemName) throws InvocationTargetException, IllegalAccessException {
+        Selectable menu = (Selectable) getActiveElement(menuName);
+        menu.selectItem(itemName);
+    //todo не кликается
+    }
+
+    private Object getActiveElement(String elementName) throws InvocationTargetException, IllegalAccessException {
         Object activePage = PageMapper.getActivePage();
-        Predicate<Element> predicate= (o1)->o1!=null&&o1.value().equals(menuName);
-        Selectable menu = (Selectable) CustomReflection
+        Predicate<Element> predicate= (o1)->o1!=null&&o1.value().equals(elementName);
+        Object element =  CustomReflection
                 .getMethods(activePage.getClass())
                 .stream()
                 .filter(o->predicate.test(o.getAnnotation(Element.class)))
                 .findFirst().get().invoke(activePage);
-        menu.selectItem(itemName);
-    //todo не кликается
+        return element;
     }
 }
