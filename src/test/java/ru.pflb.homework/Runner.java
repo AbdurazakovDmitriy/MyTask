@@ -38,7 +38,7 @@ public class Runner {
 
     @Test
     public void numberedScenario()  {
-        System.setProperty("scenario.data","{2.0:ChromeDriver}{2.0:ChromeDriver}{2.0:ChromeDriver}{2.0:ChromeDriver}");
+        System.setProperty("scenario.data","{2.0:ChromeDriver}");
         String scenariosData = System.getProperty("scenario.data");
         List<String> threadData =  Arrays.stream(scenariosData.split("\\}\\{")).map(o->o.replaceAll("[{}]","")).collect(Collectors.toList());
 

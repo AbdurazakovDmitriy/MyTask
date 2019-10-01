@@ -4,29 +4,44 @@
         <Driver type="FirefoxDriver" filePath="D:\Users\user\drivers\geckodriver.exe" serviceType = "GeckoDriverService"/>
     </Drivers>
     <Pages>
-        <Page name="LoginPage">
-            <Element name="close" type="WebElement" chromePath="xpath for chromedriver"
-                     firefoxPath="//div[@ng-click='close()']"/>
-            <Element name="clientType" type="Label" chromePath="//span[@class='RveJvd snByac']"
-                     firefoxPath="//div[@ng-click='close()']" onClick="transferPageNonClient"/>
-            <Element name="open" type="WebElement" chromePath="//span[@class='RveJvd snByac']"
-                     firefoxPath="//div[@ng-click='open()']"/>
-            <Element deprecated="true" name="info" type="Label" chromePath="//div[@class='info']"
-                     firefoxPath="//div[@class='info']"/>
-        </Page>
-
-
-
-        <Page name = "GMailAbout">
+        <Page name = "GMailAboutPage">
             <Element name = "signIn" type="Button" chromePath="//a[@data-g-label='Sign in']"
                      firefoxPath="//a[@data-g-label='Sign in']"/>
             <Element name="createAccount" type="Button" chromePath="//div[@class='maia-util']//a[@data-g-label='Create an account button']"
                      firefoxPath="//div[@class='maia-util']//a[@data-g-label='Create an account button']"/>
+        </Page>
+
+        <Page name="AccountsPage">
+            <Element name="submit" type="Button" chromePath="//div[@id='identifierNext']"
+                     firefoxPath="//div[@id='identifierNext']"/>
+            <Element name="accountCreate" type="Button" chromePath="//div[@id='ow248']"
+                     firefoxPath="//div[@id='ow248']"/>
+            <Element name="emailOrTelNum" type="TextField" chromePath="//input[@type='email']"
+                     firefoxPath="//input[@type='email']"/>
+        </Page>
+
+        <Page name="PasswordPage">
+            <Element name="password" type="TextField" chromePath="//input[@type='password']"
+                     firefoxPath="//input[@type='password']"/>
+            <Element name="submitNext" type="Button" chromePath="//div[@id='passwordNext']"
+                     firefoxPath="//div[@id='passwordNext']"/>
+        </Page>
+
+        <Page name="MainPage">
+            <Element name="writeLetter" type="Button" chromePath="//div[@class='aic']//div[@role='button']"
+                     firefoxPath="//div[@class='aic']//div[@role='button']"/>
+            <Element name="inbox" type="Button" chromePath="//div[contains(@class, 'aim')]/div[@data-tooltip='Входящие']"
+                     firefoxPath="//div[contains(@class, 'aim')]/div[@data-tooltip='Входящие']"/>
+
+
+            <Element name="actionList" type="CommunicationMenu" chromePath="//div[contains(@class, 'aim')]"
+                     firefoxPath="//div[contains(@class, 'aim')]"/>
+            <Element name="more" type="Button" chromePath="//span[@class='ait']"
+                     firefoxPath="//span[@class='ait']"/>
+
 
         </Page>
+
     </Pages>
 
-    <Triggers>
-        <Trigger name="transferPageNonClient" event="transferPageClientType=//div[@ng-click='close()']"/>
-    </Triggers>
 </ModelType>

@@ -2,3 +2,222 @@
 10993 [Thread-3] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
 11467 [Thread-2] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
 11871 [Thread-1] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4433 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11002 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/Accounts не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:67) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+5040 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4375 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+52197 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4601 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4214 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4494 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4676 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11523 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+4941 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4502 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/GMailAbout не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:67) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+4205 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+10739 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/Accounts не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:67) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+4303 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+4328 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11309 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+4510 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11156 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+11499 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+4916 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/GMailAboutPage не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:67) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+4083 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+10669 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/AccountsPage не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:67) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+4310 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+10853 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+11190 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+16714 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/PasswordPage не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:67) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+4348 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+10883 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+11231 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+16675 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'password' установлено значение 'Zayka1992'
+16807 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+5299 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11934 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+12308 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+17888 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'password' установлено значение 'Zayka1992'
+18030 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+23767 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/MainPage не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:68) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+5185 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+12843 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+13206 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+18748 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'password' установлено значение 'Zayka1992'
+18888 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+24573 [Thread-0] ERROR r.p.h.utils.CustomClassLoader - Класс target/classes/ru/pflb/homework/page/Chrome/MainPage не найден
+java.lang.ClassNotFoundException: null
+	at ru.pflb.homework.utils.CustomClassLoader.findClass(CustomClassLoader.java:22) ~[classes/:na]
+	at ru.pflb.homework.builder.Builder.buildPage(Builder.java:122) ~[classes/:na]
+	at ru.pflb.homework.stepdefinitions.MyStepdefs.getPage(MyStepdefs.java:68) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at cucumber.runtime.Utils$1.call(Utils.java:26) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Timeout.timeout(Timeout.java:16) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.Utils.invoke(Utils.java:20) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runtime.java.JavaStepDefinition.execute(JavaStepDefinition.java:57) ~[cucumber-java-4.3.1.jar:na]
+	at cucumber.runner.PickleStepDefinitionMatch.runStep(PickleStepDefinitionMatch.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.executeStep(TestStep.java:65) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestStep.run(TestStep.java:50) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.PickleStepTestStep.run(PickleStepTestStep.java:43) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.TestCase.run(TestCase.java:46) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.runner.Runner.runPickle(Runner.java:49) ~[cucumber-core-4.3.1.jar:na]
+	at cucumber.api.testng.TestNGCucumberRunner.runScenario(TestNGCucumberRunner.java:57) ~[cucumber-testng-4.3.1.jar:na]
+	at ru.pflb.homework.builder.ProcessingThread.run(ProcessingThread.java:29) ~[classes/:na]
+4970 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+11578 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+11942 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+17399 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'password' установлено значение 'Zayka1992'
+17549 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+5800 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+12444 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+12811 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+18375 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'password' установлено значение 'Zayka1992'
+18515 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+7134 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Войти'
+18640 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'emailOrTelNum' установлено значение 'dima.abdurazakov.92@gmail.com'
+18994 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'
+24507 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - В поле 'password' установлено значение 'Zayka1992'
+24650 [Thread-0] INFO  ru.pflb.homework.utils.CustomLogger - Клик по элементу 'Далее'

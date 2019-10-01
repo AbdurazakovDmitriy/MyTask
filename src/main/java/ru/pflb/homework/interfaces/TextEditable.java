@@ -1,5 +1,5 @@
 package ru.pflb.homework.interfaces;
 
 public interface TextEditable {
-    void setText();
+    void setText(String text);
 }

@@ -26,7 +26,7 @@ public class AbstractPage {
 
 
 
-    protected <T extends AbstractElement> T elementFactory(Class<T> clazz, By by) {
-        return CustomReflection.createNewInstanceOr(clazz,null, driver.findElement(by));
+    protected <T extends AbstractElement> T elementFactory(String name,Class<T> clazz, By by) {
+        return CustomReflection.createNewInstanceOr(clazz,null, driver.findElement(by)).withCaption(name);
     }
 }

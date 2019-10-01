@@ -8,6 +8,8 @@ import ru.pflb.homework.builder.PageMapper;
 import ru.pflb.homework.builder.ProcessingThread;
 import ru.pflb.homework.config.DriverManager;
 import ru.pflb.homework.interfaces.Clickable;
+import ru.pflb.homework.interfaces.Selectable;
+import ru.pflb.homework.interfaces.TextEditable;
 import ru.pflb.homework.utils.CustomLogger;
 import ru.pflb.homework.utils.CustomReflection;
 
@@ -82,5 +84,30 @@ public class MyStepdefs {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @И("в поле \"(.+)\" установлено значение \"(.+)\"")
+    public void setText(String fieldName, String text) throws IllegalAccessException, InvocationTargetException {
+        Object activePage = PageMapper.getActivePage();
+        Predicate<Element> predicate= (o1)->o1!=null&&o1.value().equals(fieldName);
+        TextEditable field = (TextEditable) CustomReflection
+                .getMethods(activePage.getClass())
+                .stream()
+                .filter(o->predicate.test(o.getAnnotation(Element.class)))
+                .findFirst().get().invoke(activePage);
+        field.setText(text);
+    }
+
+    @И("в меню \"(.+)\" выбрать пункт \"(.+)\"")
+    public void selectMenuItem(String menuName, String itemName) throws InvocationTargetException, IllegalAccessException {
+        Object activePage = PageMapper.getActivePage();
+        Predicate<Element> predicate= (o1)->o1!=null&&o1.value().equals(menuName);
+        Selectable menu = (Selectable) CustomReflection
+                .getMethods(activePage.getClass())
+                .stream()
+                .filter(o->predicate.test(o.getAnnotation(Element.class)))
+                .findFirst().get().invoke(activePage);
+        menu.selectItem(itemName);
+    //todo не кликается
     }
 }

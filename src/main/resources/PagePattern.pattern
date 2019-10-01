@@ -6,9 +6,10 @@ import ru.pflb.homework.annotations.Element;
 import ru.pflb.homework.annotations.Page;
 import ru.pflb.homework.annotations.Pages;
 import ru.pflb.homework.config.DriverManager;
-import ru.pflb.homework.elementModels.Label;
+import ru.pflb.homework.elementModels.*;
 import ru.pflb.homework.page.AbstractPage;
-import ru.pflb.homework.elementModels.Button;
+
+import java.util.List;
 @Page("")
 public class PageName extends AbstractPage {
     public PageName() {
