@@ -14,7 +14,6 @@ public class AbstractPage {
     private WebDriverWait wait;
     private WebDriver driver;
 
-
     public AbstractPage() {
         this.driver = DriverManager.getWD(ProcessingThread.getSessionId());
         wait = new WebDriverWait(this.driver,10);
@@ -23,8 +22,6 @@ public class AbstractPage {
     protected WebDriver getDriver() {
         return driver;
     }
-
-
 
     protected <T extends AbstractElement> T elementFactory(Class<T> clazz, By by) {
         return CustomReflection.createNewInstanceOr(clazz,null, driver.findElement(by));
